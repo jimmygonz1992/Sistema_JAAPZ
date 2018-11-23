@@ -143,31 +143,7 @@ public class SeguridadAccesosC {
 			}else {
 				ObservableList<SegMenu> datos = tvMenu.getItems();
 				tvMenu.getColumns().clear();
-				//llenar los datos en la tabla
-				TableColumn<SegMenu, String> idColum = new TableColumn<>("Código");
-				idColum.setMinWidth(10);
-				idColum.setPrefWidth(72);
-				idColum.setCellValueFactory(new PropertyValueFactory<SegMenu, String>("idMenu"));
-
-				TableColumn<SegMenu, String> nombreColum = new TableColumn<>("Nombre del Menu");
-				nombreColum.setMinWidth(10);
-				nombreColum.setPrefWidth(280);
-				nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegMenu,String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(CellDataFeatures<SegMenu, String> param) {
-						String dato = param.getValue().getDescripcion();
-						List<SegMenu> listaMenuAll = new ArrayList<SegMenu>();
-						listaMenuAll = menuDAO.getListaMenu();
-						for(int j = 0 ; j < listaMenuAll.size() ; j ++) {
-							if(param.getValue().getIdMenuPadre().equals(listaMenuAll.get(j).getIdMenu()))
-								dato = listaMenuAll.get(j).getDescripcion() +  "/" + dato;
-						}
-						return new SimpleObjectProperty<String>(dato);
-					}
-				});
-
-				tvMenu.getColumns().addAll(idColum,nombreColum);
-				tvMenu.setItems(datos);	
+				llenar_Datos();
 			}
 
 			//recupera los asignados a esa persona

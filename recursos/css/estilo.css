@@ -221,3 +221,9 @@
 	-fx-background-color: firebrick;
 	-fx-background-radius: 5;
 }
+.groupBox{
+	-fx-border-style: solid inside;
+	-fx-border-width: 2;
+	-fx-border-insets: 5;
+	-fx-border-color: #BDBDBD;
+}

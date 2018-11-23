@@ -73,15 +73,16 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                        <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                            <children>
                               <Label text="CONFIRMAR CONTRASEÑA:">
                                  <font>
                                     <Font name="Arial Bold" size="22.0" />
                                  </font>
                               </Label>
+                              <Label />
                            </children>
-                        </HBox>
+                        </VBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
                               <TextField fx:id="txtUsuario" prefHeight="25.0" prefWidth="200.0" />
@@ -97,11 +98,12 @@
                               <PasswordField fx:id="txtContraseñaNueva" prefHeight="25.0" prefWidth="196.0" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
                               <PasswordField fx:id="txtConfirmaContraseña" prefHeight="25.0" prefWidth="196.0" />
+                              <Label fx:id="lblEtiqueta" />
                            </children>
-                        </HBox>
+                        </VBox>
                      </children>
                   </GridPane>
                </children>

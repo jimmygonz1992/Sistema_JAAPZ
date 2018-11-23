@@ -7,9 +7,12 @@ import ec.com.jaapz.modelo.SegUsuarioDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -19,6 +22,7 @@ public class SeguridadCambioContraseñaC {
 	@FXML private PasswordField txtContraseñaNueva;
 	@FXML private PasswordField txtConfirmaContraseña;
 	@FXML private Button btnGrabar;
+	@FXML private Label lblEtiqueta;
 	
 	Encriptado encriptado = new Encriptado();
 	ControllerHelper helper = new ControllerHelper();
@@ -34,9 +38,32 @@ public class SeguridadCambioContraseñaC {
 			txtUsuario.setText(encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
 			txtUsuario.setEditable(false);
 			txtContraseñaActual.setEditable(false);
-			//txtIdUsuario.setText(Integer.toString(Context.getInstance().getIdUsuario()));
 
-			//Context.getInstance().setUsuarios(null);
+			txtConfirmaContraseña.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if(!txtConfirmaContraseña.getText().equals("") && !txtContraseñaNueva.getText().equals(""))
+						if(txtConfirmaContraseña.getText().equals(txtContraseñaNueva.getText()))
+							lblEtiqueta.setText("Las contraseñas coinciden");
+						else
+							lblEtiqueta.setText("Las contraseñas no coinciden");
+					else
+						lblEtiqueta.setText("");
+				}
+			});
+			
+			txtContraseñaNueva.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if(!txtConfirmaContraseña.getText().equals("") && !txtContraseñaNueva.getText().equals(""))
+						if(txtConfirmaContraseña.getText().equals(txtContraseñaNueva.getText()))
+							lblEtiqueta.setText("Las contraseñas coinciden");
+						else
+							lblEtiqueta.setText("Las contraseñas no coinciden");
+					else
+						lblEtiqueta.setText("");
+				}
+			});
 		}catch (Exception ex){
 			System.out.println(ex.getMessage());
 		}
@@ -71,6 +98,11 @@ public class SeguridadCambioContraseñaC {
 			}
 			if(txtConfirmaContraseña.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Confirme contraseña", Context.getInstance().getStage());
+				txtConfirmaContraseña.requestFocus();
+				return false;
+			}
+			if(!txtConfirmaContraseña.getText().equals(txtContraseñaNueva.getText())){
+				helper.mostrarAlertaAdvertencia("Las contraseñas no coinciden", Context.getInstance().getStage());
 				txtConfirmaContraseña.requestFocus();
 				return false;
 			}

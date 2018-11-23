@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="587.0" prefWidth="685.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SeguridadUsuarioC">
    <children>
-      <HBox alignment="CENTER" layoutX="30.0" maxHeight="577.0" prefHeight="577.0" prefWidth="651.0" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 300" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="5.0">
+      <HBox alignment="CENTER" layoutX="30.0" maxHeight="577.0" prefHeight="577.0" prefWidth="651.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
               <columnConstraints>
@@ -35,7 +35,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <HBox alignment="CENTER" styleClass="groupBox" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                      <children>
                         <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
                            <children>
@@ -172,7 +172,7 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" styleClass="groupBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
                         <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="50.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
                            <font>
