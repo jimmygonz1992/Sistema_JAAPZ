@@ -76,11 +76,7 @@
                               </Label>
                            </children>
                         </HBox>
-<<<<<<< HEAD
-                        <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
-=======
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
->>>>>>> 8cd589e1bdeba913bf6249885f2dd8983f7c0a00
+                        <VBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Label text="CONFIRMAR CONTRASEÑA:">
                                  <font>
@@ -89,13 +85,8 @@
                               </Label>
                               <Label />
                            </children>
-<<<<<<< HEAD
                         </VBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-=======
-                        </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
->>>>>>> 8cd589e1bdeba913bf6249885f2dd8983f7c0a00
                            <children>
                               <TextField fx:id="txtUsuario" prefHeight="25.0" prefWidth="200.0" />
                            </children>
@@ -110,21 +101,13 @@
                               <PasswordField fx:id="txtContraseñaNueva" prefHeight="25.0" prefWidth="196.0" />
                            </children>
                         </HBox>
-<<<<<<< HEAD
-                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-=======
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
->>>>>>> 8cd589e1bdeba913bf6249885f2dd8983f7c0a00
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
                               <PasswordField fx:id="txtConfirmaContraseña" prefHeight="25.0" prefWidth="196.0" />
                               <Label fx:id="lblEtiqueta" />
                            </children>
-<<<<<<< HEAD
                         </VBox>
-=======
-                        </HBox>
                         <Separator prefHeight="14.0" prefWidth="256.0" GridPane.columnSpan="5" GridPane.rowIndex="2" />
->>>>>>> 8cd589e1bdeba913bf6249885f2dd8983f7c0a00
                      </children>
                   </GridPane>
                </children>
