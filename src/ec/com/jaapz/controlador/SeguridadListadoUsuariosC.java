@@ -51,11 +51,11 @@ public class SeguridadListadoUsuariosC {
 			TableColumn<SegUsuario, String> nombresColum = new TableColumn<>("Nombres");
 			nombresColum.setMinWidth(10);
 			nombresColum.setPrefWidth(200);
-			nombresColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("nombres"));
+			nombresColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("nombre"));
 			TableColumn<SegUsuario, String> apellidosColum = new TableColumn<>("Apellidos");
 			apellidosColum.setMinWidth(10);
 			apellidosColum.setPrefWidth(200);
-			apellidosColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("apellidos"));
+			apellidosColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("apellido"));
 			TableColumn<SegUsuario, String> generoColum = new TableColumn<>("Telefono");
 			generoColum.setMinWidth(10);
 			generoColum.setPrefWidth(90);

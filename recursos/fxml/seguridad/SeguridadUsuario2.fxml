@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="587.0" prefWidth="685.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SeguridadUsuarioC">
    <children>
-      <HBox alignment="CENTER" layoutX="30.0" maxHeight="577.0" prefHeight="577.0" prefWidth="651.0" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 300" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="5.0">
+      <HBox alignment="CENTER" layoutX="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
          <children>
             <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
               <columnConstraints>
@@ -19,9 +19,10 @@
                   <ColumnConstraints fillWidth="false" hgrow="NEVER" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="8.0" />
-                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" />
-                <RowConstraints maxHeight="488.0" minHeight="10.0" prefHeight="462.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="30.0" minHeight="8.0" prefHeight="30.0" />
+                  <RowConstraints maxHeight="28.0" minHeight="5.0" prefHeight="28.0" vgrow="NEVER" />
+                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="32.0" />
+                <RowConstraints maxHeight="488.0" minHeight="10.0" prefHeight="410.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
               </rowConstraints>
@@ -35,7 +36,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                  <HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                      <children>
                         <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
                            <children>
@@ -112,7 +113,6 @@
                               <TextField fx:id="txtUsuario" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                               <PasswordField fx:id="txtClave" GridPane.columnIndex="2" GridPane.rowIndex="8" />
                               <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-                              <ImageView fx:id="ivFoto" fitHeight="123.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" styleClass="Bordes" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                               <Label text="Foto" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
@@ -148,6 +148,11 @@
                                     <Insets left="50.0" />
                                  </GridPane.margin>
                               </Button>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                                 <children>
+                                    <ImageView fx:id="ivFoto" fitHeight="123.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" styleClass="Bordes" HBox.hgrow="ALWAYS" />
+                                 </children>
+                              </HBox>
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="1.0" prefWidth="11.0" />
@@ -172,7 +177,7 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #000; -fx-border-width: 0.5; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
                         <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="50.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
                            <font>
@@ -189,11 +194,12 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Label alignment="BASELINE_LEFT" contentDisplay="BOTTOM" text="INGRESO DE DATOS" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                  <Label alignment="BASELINE_LEFT" contentDisplay="BOTTOM" text="INGRESO DE DATOS" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                      <font>
                         <Font name="Arial Bold" size="14.0" />
                      </font>
                   </Label>
+                  <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>

@@ -18,25 +18,28 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.0" minWidth="9.0" prefWidth="9.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="204.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="287.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="62.0" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="62.0" minHeight="5.0" prefHeight="6.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="179.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="403.0" minHeight="10.0" prefHeight="259.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="365.0" minHeight="6.0" prefHeight="8.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="321.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.rowSpan="2">
+            <HBox GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <children>
                   <TableView fx:id="tvMenu" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <HBox GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="2">
+            <HBox GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <children>
                   <TableView fx:id="tvPermiso" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
+            <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
                <children>
                   <Button fx:id="btnAnadir" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#anadir" prefHeight="62.0" prefWidth="68.0" styleClass="botonAnadir" />
                   <Button fx:id="btnQuitar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#quitar" prefHeight="62.0" prefWidth="68.0" styleClass="botonQuitar">
@@ -46,17 +49,17 @@
                   </Button>
                </children>
             </VBox>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="183.0" text="OPCIONES DISPONIBLES" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="183.0" text="OPCIONES DISPONIBLES" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="183.0" text="OPCIONES ASIGNADAS" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="15.0" prefWidth="183.0" text="OPCIONES ASIGNADAS" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+            <HBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <children>
                   <Label contentDisplay="CENTER" text="SELECCIONAR PERFIL:" HBox.hgrow="ALWAYS">
                      <font>
@@ -68,14 +71,6 @@
                         <Insets left="25.0" />
                      </HBox.margin>
                   </ComboBox>
-                  <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabar" prefHeight="57.0" prefWidth="64.0" styleClass="botonGrabar" text="Guardar">
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Button>
                </children>
             </HBox>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="202.0" text="ACCESOS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER">
@@ -83,6 +78,15 @@
                   <Font name="Arial Bold" size="28.0" />
                </font>
             </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
+               <children>
+                  <Button fx:id="btnGuardar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabar" prefHeight="57.0" prefWidth="64.0" styleClass="botonGrabar" text="Guardar">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>
