@@ -40,6 +40,8 @@
 		<class>ec.com.jaapz.modelo.SolInspeccionRep</class>
 		<class>ec.com.jaapz.modelo.TipoPago</class>
 		<class>ec.com.jaapz.modelo.TipoRubro</class>
+		<class>ec.com.jaapz.modelo.TipoSolicitud</class>
+		<class>ec.com.jaapz.modelo.Kardex</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bd_jaapz"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>

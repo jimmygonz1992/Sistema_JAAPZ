@@ -1,8 +1,5 @@
 package ec.com.jaapz.controlador;
 
-import java.sql.Timestamp;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -136,8 +133,8 @@ public class ClienteInspeccionEditarC {
 				inspeccionSeleccionada.setBarrio(cboBarrio.getSelectionModel().getSelectedItem());
 				inspeccionSeleccionada.setUsoMedidor(cboUsoMedidor.getSelectionModel().getSelectedItem().getDescripcion());
 				inspeccionSeleccionada.setReferencia(txtReferenciaIns.getText());
-				Date date = Date.from(dtpFechaIns.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-				Timestamp fecha = new Timestamp(date.getTime());
+				//Date date = Date.from(dtpFechaIns.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				//Timestamp fecha = new Timestamp(date.getTime());
 				
 				//tambien arreglar crvg
 				//inspeccionSeleccionada.setFecha(fecha);
