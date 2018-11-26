@@ -72,6 +72,11 @@ public class Rubro implements Serializable {
 	@OneToMany(mappedBy="rubro", cascade = CascadeType.ALL)
 	private List<ReparacionDetalle> reparacionDetalles;
 
+
+	//bi-directional many-to-one association to ReparacionDetalle
+	@OneToMany(mappedBy="rubro", cascade = CascadeType.ALL)
+	private List<Kardex> kardexs;
+
 	//bi-directional many-to-one association to TipoRubro
 	@ManyToOne
 	@JoinColumn(name="id_tipo_rubro")
@@ -269,6 +274,31 @@ public class Rubro implements Serializable {
 	public void setTipoRubro(TipoRubro tipoRubro) {
 		this.tipoRubro = tipoRubro;
 	}
+	
+	
+	
+	public List<Kardex> getKardexs() {
+		return kardexs;
+	}
+
+	public void setKardexs(List<Kardex> kardexs) {
+		this.kardexs = kardexs;
+	}
+	public Kardex addKardex(Kardex kardex) {
+		getKardexs().add(kardex);
+		kardex.setRubro(this);
+
+		return kardex;
+	}
+
+	public Kardex removeKardex(Kardex kardex) {
+		getKardexs().remove(kardex);
+		kardex.setRubro(null);
+
+		return kardex;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return this.descripcion;

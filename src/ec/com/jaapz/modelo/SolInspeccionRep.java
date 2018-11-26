@@ -49,6 +49,11 @@ public class SolInspeccionRep implements Serializable {
 	@JoinColumn(name="id_cuenta")
 	private CuentaCliente cuentaCliente;
 
+	//bi-directional many-to-one association to Barrio
+	@ManyToOne
+	@JoinColumn(name="idTipoSolicitud")
+	private TipoSolicitud tipoSolicitud;
+
 	public SolInspeccionRep() {
 	}
 
@@ -144,6 +149,14 @@ public class SolInspeccionRep implements Serializable {
 
 	public void setCuentaCliente(CuentaCliente cuentaCliente) {
 		this.cuentaCliente = cuentaCliente;
+	}
+
+	public TipoSolicitud getTipoSolicitud() {
+		return tipoSolicitud;
+	}
+
+	public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
+		this.tipoSolicitud = tipoSolicitud;
 	}
 
 }

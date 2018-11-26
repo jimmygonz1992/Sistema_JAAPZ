@@ -68,6 +68,11 @@ public class SolInspeccionIn implements Serializable {
 	private String observacion;
 
 	private String referencia;
+	
+	private String direccion;
+	
+	@Column(name="telefono_contacto")
+	private String telefonoContacto;
 
 	@Column(name="uso_medidor")
 	private String usoMedidor;
@@ -87,6 +92,11 @@ public class SolInspeccionIn implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="id_barrio")
 	private Barrio barrio;
+
+	//bi-directional many-to-one association to Barrio
+	@ManyToOne
+	@JoinColumn(name="idTipoSolicitud")
+	private TipoSolicitud tipoSolicitud;
 
 	//bi-directional many-to-one association to Cliente
 	@ManyToOne
@@ -258,6 +268,30 @@ public class SolInspeccionIn implements Serializable {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	public TipoSolicitud getTipoSolicitud() {
+		return tipoSolicitud;
+	}
+
+	public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
+		this.tipoSolicitud = tipoSolicitud;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefonoContacto() {
+		return telefonoContacto;
+	}
+
+	public void setTelefonoContacto(String telefonoContacto) {
+		this.telefonoContacto = telefonoContacto;
 	}
 
 }

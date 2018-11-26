@@ -141,7 +141,6 @@ public class SeguridadAccesosC {
 				tvMenu.setItems(datosMenu);
 
 			}else {
-				ObservableList<SegMenu> datos = tvMenu.getItems();
 				tvMenu.getColumns().clear();
 				llenar_Datos();
 			}
