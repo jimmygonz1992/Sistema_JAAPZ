@@ -1,6 +1,7 @@
 package ec.com.jaapz.modelo;
 
 import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 
@@ -10,13 +11,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+<<<<<<< HEAD
+=======
 import javax.persistence.NamedQueries;
+>>>>>>> d3e8b8530d0de585aac0e066a46da85b1a6ae300
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+<<<<<<< HEAD
+@Entity
+@NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p")
+=======
 
 
 @Entity
@@ -26,6 +34,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="Proveedor.recuperaProveedor", query="SELECT p FROM Proveedor p WHERE p.ruc = (:ruc) and p.estado = 'A'"),
 })
 
+>>>>>>> d3e8b8530d0de585aac0e066a46da85b1a6ae300
 public class Proveedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 

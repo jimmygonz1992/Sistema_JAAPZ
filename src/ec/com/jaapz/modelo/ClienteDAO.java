@@ -23,4 +23,13 @@ public class ClienteDAO extends ClaseDAO{
 		resultado = (List<Cliente>) query.getResultList();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public List<Cliente> getListaClientesCedula(String patron){
+		List<Cliente> resultado = new ArrayList<Cliente>();
+		Query query = getEntityManager().createNamedQuery("Cliente.bucarCedula");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", patron);
+		resultado = (List<Cliente>) query.getResultList();
+		return resultado;
+	}
 }

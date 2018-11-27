@@ -13,6 +13,7 @@ import java.util.List;
 @Table(name="cliente")
 @NamedQueries({
 	@NamedQuery(name="Cliente.findAll", query="SELECT c FROM Cliente c order by c.idCliente"),
+	@NamedQuery(name="Cliente.bucarCedula", query="SELECT c FROM Cliente c where c.cedula = :patron and c.estado = 'A'"),
 	@NamedQuery(name="Cliente.bucarPatron", query="SELECT c FROM Cliente c where (lower(c.apellido) like lower(:patron)  or lower(c.nombre) like lower(:patron))"
 			+ "  and c.estado <> 'E' order by c.idCliente")
 })
