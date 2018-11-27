@@ -1,6 +1,7 @@
 package ec.com.jaapz.controlador;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,6 +88,9 @@ public class BodegaRubroC {
 			rubro.setTipoRubro(cboTipoRubro.getSelectionModel().getSelectedItem());
 			rubro.setDescripcion(txtDescripcion.getText());
 			rubro.setMarca(txtMarca.getText());
+			rubro.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+			rubro.setFechaCrea(new Date());
+			//falta la hora
 			rubro.setPrecio(Double.parseDouble(txtPrecio.getText()));
 			rubro.setStock(Integer.parseInt(txtCantidad.getText()));
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
