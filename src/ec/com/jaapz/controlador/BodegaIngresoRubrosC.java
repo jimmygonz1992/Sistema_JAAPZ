@@ -26,6 +26,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -37,6 +38,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtNumero;
 	@FXML private TextField txtUsuario;
 	@FXML private TextField txtSubtotal;
+	@FXML private TextField txtDescuento;
 	@FXML private TextField txtTotal;
 	@FXML private Button btnAñadir;
 	@FXML private Button btnEliminar;
@@ -44,11 +46,19 @@ public class BodegaIngresoRubrosC {
 	@FXML private Button btnNuevo;
 	@FXML private Button btnBuscarRubro;
 	@FXML private TextField txtCodigoMat;
-	@FXML private TextField txtDescripcionMat;
+	@FXML private TextArea txtDescripcionMat;
 	@FXML private TextField txtCantidadMat;
 	@FXML private TextField txtPrecioMat;
 	@FXML private TextField txtStockMat;
-
+	
+	@FXML private TextField txtProveedor;
+	@FXML private TextField txtRuc;
+	@FXML private TextField txtNombresPro;
+	@FXML private TextField txtApellidosPro;
+	@FXML private TextField txtDireccionPro;
+	@FXML private TextField txtTelefonoPro;
+	@FXML private TextArea txtObservaciones;
+	
 	private @FXML TableView<IngresoDetalle> tvDatos;
 	ControllerHelper helper = new ControllerHelper();
 	Rubro rubroSeleccionado = new Rubro();

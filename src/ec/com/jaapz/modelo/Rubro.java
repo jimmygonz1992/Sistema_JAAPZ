@@ -275,8 +275,6 @@ public class Rubro implements Serializable {
 		this.tipoRubro = tipoRubro;
 	}
 	
-	
-	
 	public List<Kardex> getKardexs() {
 		return kardexs;
 	}
@@ -284,6 +282,7 @@ public class Rubro implements Serializable {
 	public void setKardexs(List<Kardex> kardexs) {
 		this.kardexs = kardexs;
 	}
+	
 	public Kardex addKardex(Kardex kardex) {
 		getKardexs().add(kardex);
 		kardex.setRubro(this);
@@ -297,8 +296,7 @@ public class Rubro implements Serializable {
 
 		return kardex;
 	}
-	
-	
+		
 	@Override
 	public String toString() {
 		return this.descripcion;
