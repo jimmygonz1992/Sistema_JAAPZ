@@ -95,7 +95,7 @@ public class SolInspeccionIn implements Serializable {
 
 	//bi-directional many-to-one association to Barrio
 	@ManyToOne
-	@JoinColumn(name="idTipoSolicitud")
+	@JoinColumn(name="id_tipo_solicitud")
 	private TipoSolicitud tipoSolicitud;
 
 	//bi-directional many-to-one association to Cliente

@@ -11,7 +11,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="tipo_solicitud")
-@NamedQuery(name="TipoSolicitud.findAll", query="SELECT t FROM TipoSolicitud t where t.estado = 'A'")
+@NamedQueries({
+	@NamedQuery(name="TipoSolicitud.findAll", query="SELECT t FROM TipoSolicitud t where t.estado = 'A'"),
+	@NamedQuery(name="TipoSolicitud.findId", query="SELECT t FROM TipoSolicitud t where t.estado = 'A' and t.idTipoSolicitud = :idTipo")
+})
 public class TipoSolicitud implements Serializable{
 	private static final long serialVersionUID = 1L;
 
@@ -98,5 +101,12 @@ public class TipoSolicitud implements Serializable{
 
 		return solInspeccionRep;
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.descripcion;
+	}
+	
 	
 }
