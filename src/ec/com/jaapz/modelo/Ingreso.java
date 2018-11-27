@@ -42,6 +42,12 @@ public class Ingreso implements Serializable {
 	@OneToMany(mappedBy="ingreso", cascade = CascadeType.ALL)
 	private List<IngresoDetalle> ingresoDetalles;
 
+	//bi-directional many-to-one association to TipoRubro
+	@ManyToOne
+	@JoinColumn(name="id_proveedor")
+	private Proveedor proveedor;
+	
+	
 	public Ingreso() {
 	}
 
@@ -130,5 +136,15 @@ public class Ingreso implements Serializable {
 
 		return ingresoDetalle;
 	}
+
+	public Proveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(Proveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	
 
 }
