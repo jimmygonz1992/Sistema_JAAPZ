@@ -49,7 +49,7 @@ public class Kardex implements Serializable {
 	private double valorUnitario;
 
 	@Column(name="costo_total")
-	private String costoTotal;
+	private double costoTotal;
 
 	@Column(name="tipo_movimiento")
 	private String tipoMovimiento;
@@ -125,11 +125,11 @@ public class Kardex implements Serializable {
 		this.valorUnitario = valorUnitario;
 	}
 
-	public String getCostoTotal() {
+	public double getCostoTotal() {
 		return costoTotal;
 	}
 
-	public void setCostoTotal(String costoTotal) {
+	public void setCostoTotal(double costoTotal) {
 		this.costoTotal = costoTotal;
 	}
 

@@ -23,7 +23,19 @@ public abstract class Constantes {
 	public static String EST_FAC_CANCELADO = "CANCELADO";
 	public static String EST_FAC_PENDIENTE = "PENDIENTE";
 	
+	private static final Integer TIPO_RUC_NATURAL= 1;
+	private static final Integer RUC_PRIVADA = 2;
+	private static final Integer RUC_PUBLICA=3;
 	
+	public static Integer getTipoRucNatural() {
+		return TIPO_RUC_NATURAL;
+	}
+	public static Integer getRucPrivada() {
+		return RUC_PRIVADA;
+	}
+	public static Integer getRucPublica() {
+		return RUC_PUBLICA;
+	}
 	
 	//acciones para la sincronizacion
 	public static Integer ACCION_MODIFICAR = 1;
