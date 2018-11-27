@@ -10,13 +10,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+
 @Entity
-@NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p")
+@Table(name="proveedor")
+@NamedQueries({
+	@NamedQuery(name="Proveedor.findAll", query="SELECT p FROM Proveedor p"),
+	@NamedQuery(name="Proveedor.recuperaProveedor", query="SELECT p FROM Proveedor p WHERE p.ruc = (:ruc) and p.estado = 'A'"),
+})
+
 public class Proveedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 

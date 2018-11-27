@@ -11,15 +11,21 @@ import java.util.Optional;
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
+import ec.com.jaapz.modelo.Kardex;
+import ec.com.jaapz.modelo.Proveedor;
+import ec.com.jaapz.modelo.ProveedorDAO;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.modelo.SegUsuario;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -30,6 +36,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 public class BodegaIngresoRubrosC {
@@ -62,9 +70,11 @@ public class BodegaIngresoRubrosC {
 	private @FXML TableView<IngresoDetalle> tvDatos;
 	ControllerHelper helper = new ControllerHelper();
 	Rubro rubroSeleccionado = new Rubro();
+	Proveedor proveedorSeleccionado;
 	SegUsuario usuarioLogueado = new SegUsuario();
 	IngresoDAO ingresoDao = new IngresoDAO();
 	RubroDAO rubroDAO = new RubroDAO();
+	ProveedorDAO proveedorDAO = new ProveedorDAO();
 	
 	public void initialize(){
 		try {
@@ -77,13 +87,109 @@ public class BodegaIngresoRubrosC {
 			txtPrecioMat.setEditable(false);
 			txtStockMat.setEditable(false);
 			dtpFecha.setValue(LocalDate.now());
+			txtRuc.requestFocus();
+			
+			//validar solo numeros
+			txtRuc.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtRuc.setText(oldValue);
+					}
+				}
+			});
+			
+			txtDescuento.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					txtDescuento.setText(newValue);
+					if (txtDescuento.getText().equals("")){
+						txtTotal.setText(newValue);
+					}else if(Double.parseDouble(txtDescuento.getText()) <= Double.parseDouble(txtSubtotal.getText())){
+						Double resultado = Double.valueOf(txtSubtotal.getText()) - Double.valueOf(txtDescuento.getText());
+						txtTotal.setText(resultado.toString());
+					}else{
+						helper.mostrarAlertaAdvertencia("El valor ingresado es superior al Subtotal!.. Vuelva a ingresar!!", Context.getInstance().getStage());
+						txtDescuento.setText("");
+						txtDescuento.requestFocus();
+					}				
+				}
+			});
+			
+			txtCantidadMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						anadir();
+						btnBuscarRubro.requestFocus();
+					}
+				}
+			});
+			
+			txtRuc.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						if (validarRucPersonaNatural(txtRuc.getText()) == false){
+							helper.mostrarAlertaAdvertencia("El número de RUC es incorrecto!", Context.getInstance().getStage());
+							txtRuc.setText("");
+							txtRuc.requestFocus();	
+						}else {
+							if (validarProveedorExiste() == false) {
+								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+							}else {
+								recuperarDatos(txtRuc.getText());
+								txtNumero.requestFocus();
+							}
+						}
+					}
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	boolean validarProveedorExiste() {
+		try {
+			List<Proveedor> listaProveedores;
+			listaProveedores = proveedorDAO.getRecuperaProveedor(txtRuc.getText());
+			if(listaProveedores.size() != 0)
+				return true;
+			else
+				return false;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	public void recuperarDatos(String ruc){
+		try{
+			List<Proveedor> listaProveedor = new ArrayList<Proveedor>();
+			listaProveedor = proveedorDAO.getRecuperaProveedor(ruc);
+			for(int i = 0 ; i < listaProveedor.size() ; i ++) {
+				txtProveedor.setText(listaProveedor.get(i).getNombreComercial());
+				txtRuc.setText(listaProveedor.get(i).getRuc());
+				txtNombresPro.setText(listaProveedor.get(i).getNombres());
+				txtApellidosPro.setText(listaProveedor.get(i).getApellidos());
+				txtDireccionPro.setText(listaProveedor.get(i).getDireccion());
+				txtTelefonoPro.setText(listaProveedor.get(i).getTelefono());
+				
+				proveedorSeleccionado = listaProveedor.get(i);
+			}
+			if (listaProveedor.size() == 0)
+				proveedorSeleccionado = new Proveedor();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@SuppressWarnings("unchecked")
-	public void añadir() {
+	public void anadir() {
 		try {
 			if(validarAñadirRubro() == false)
 				return;
@@ -161,9 +267,9 @@ public class BodegaIngresoRubrosC {
 	
 	public void sumarDatos() {
 		try {
-			
 			if (tvDatos.getItems().isEmpty()) {
 				txtSubtotal.setText("0.0");
+				txtDescuento.setText("0.0");
 				txtTotal.setText("0.0");
 			}else {
 				double subtotal = 0;
@@ -172,6 +278,11 @@ public class BodegaIngresoRubrosC {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
 					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					if (txtDescuento.getText().isEmpty()) {
+						txtDescuento.setText("0.0");
+					}
+					double total = Double.valueOf(txtSubtotal.getText()) - Double.valueOf(txtDescuento.getText());
+					txtTotal.setText(String.valueOf(Double.valueOf(total)));
 				}
 			}
 		}catch(Exception ex) {
@@ -186,6 +297,8 @@ public class BodegaIngresoRubrosC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Ingreso ingreso = new Ingreso();
+				List<Kardex> listaProductos = new ArrayList<Kardex>();
+				
 				String estado = "A";		
 				ingreso.setIdIngreso(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -194,17 +307,63 @@ public class BodegaIngresoRubrosC {
 				ingreso.setNumeroIngreso(txtNumero.getText());
 				ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.setEstado(estado);
+				
+				
+				
+				
 				List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
 				for(IngresoDetalle det : tvDatos.getItems()) {
 					det.setIdIngresoDet(null);
 					det.setEstado("A");
 					det.setIngreso(ingreso);
+					
+					Kardex kardex = new Kardex();
+					kardex.setIdKardex(null);
+					kardex.setRubro(det.getRubro());
+					kardex.setFecha(fecha);
+					kardex.setTipoDocumento("Factura #");
+					kardex.setNumDocumento(txtNumero.getText());
+					kardex.setDetalleOperacion(null);
+					kardex.setCantidad(det.getCantidad());
+					kardex.setUnidadMedida("Unidad");
+					kardex.setValorUnitario(det.getPrecio());
+					kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+					kardex.setTipoMovimiento("ING");
+					kardex.setEstado("A");
+										
+					listaProductos.add(kardex);
 					listaAgregadaRubros.add(det);
 				}
+				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
+				proveedorSeleccionado.setNombres(txtNombresPro.getText());
+				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
+				proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
+				proveedorSeleccionado.setRuc(txtRuc.getText());
+				proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
+				proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				proveedorSeleccionado.setFechaCrea(fecha);
+				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+				proveedorSeleccionado.setFechaModificacion(fecha);
+				proveedorSeleccionado.setEstado("A");
+				
+				/*if(proveedorSeleccionado.getIdProveedor() != null) {
+					ingreso.setProveedor(proveedorSeleccionado);
+				}else {
+					proveedorSeleccionado.setIdProveedor(null);
+					List<Ingreso> lista = new ArrayList<Proveedor>();
+					lista.add(proveedorSeleccionado);
+					ingreso.setProveedor(proveedorSeleccionado);
+				}*/
+				
 				
 				ingreso.setIngresoDetalles(listaAgregadaRubros);
 				ingresoDao.getEntityManager().getTransaction().begin();
-				ingresoDao.getEntityManager().persist(ingreso);				
+				ingresoDao.getEntityManager().persist(ingreso);		
+				
+				for (Kardex kar : listaProductos) {
+					ingresoDao.getEntityManager().persist(kar);	
+				}
+				
 				ingresoDao.getEntityManager().getTransaction().commit();
 					
 				actualizarListaRubros();
@@ -224,11 +383,47 @@ public class BodegaIngresoRubrosC {
 	
 	boolean validarDatos() {
 		try {
+			if(txtRuc.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar RUC del Proveedor", Context.getInstance().getStage());
+				txtRuc.requestFocus();
+				return false;
+			}
+			
+			if(txtProveedor.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar Nombre Comercial del Proveedor", Context.getInstance().getStage());
+				txtProveedor.requestFocus();
+				return false;
+			}
+			
+			if(txtNombresPro.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar Nombres del Proveedor", Context.getInstance().getStage());
+				txtNombresPro.requestFocus();
+				return false;
+			}
+			
+			if(txtApellidosPro.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar Apellidos del Proveedor", Context.getInstance().getStage());
+				txtApellidosPro.requestFocus();
+				return false;
+			}
+			
+			if(txtDireccionPro.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar Dirección del Proveedor", Context.getInstance().getStage());
+				txtDireccionPro.requestFocus();
+				return false;
+			}
+			
+			if(txtTelefonoPro.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar Teléfono del Proveedor", Context.getInstance().getStage());
+				txtTelefonoPro.requestFocus();
+				return false;
+			}
+			
 			if(txtNumero.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Nº Factura de Compra", Context.getInstance().getStage());
 				txtNumero.requestFocus();
 				return false;
-			}
+			}		
 			
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Ingresar Fecha", Context.getInstance().getStage());
@@ -301,7 +496,7 @@ public class BodegaIngresoRubrosC {
 				txtStockMat.setText(String.valueOf(datoSeleccionado.getStock()));
 
 			txtPrecioMat.setText(String.valueOf(datoSeleccionado.getPrecio()));
-
+			txtCantidadMat.requestFocus();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -314,4 +509,120 @@ public class BodegaIngresoRubrosC {
 		txtPrecioMat.setText("");
 		txtStockMat.setText("");
 	}
+	
+	void limpiarProveedor() {
+		txtProveedor.setText("");
+		txtRuc.setText("");
+		txtNombresPro.setText("");
+		txtApellidosPro.setText("");
+		txtDireccionPro.setText("");
+		txtTelefonoPro.setText("");
+	}
+	
+	
+	public boolean validarRucPersonaNatural(String numero) {
+        try {
+            validarInicial(numero, 13);
+            validarCodigoProvincia(numero.substring(0, 2));
+            validarTercerDigito(String.valueOf(numero.charAt(2)), Constantes.getTipoRucNatural());
+            validarCodigoEstablecimiento(numero.substring(10, 13));
+            validarCedula(numero.substring(0, 9));
+        } catch (Exception ex) {
+        	limpiarProveedor();
+        	System.out.println(ex.getMessage());
+            return false; 
+        }
+
+        return true;
+    }
+	
+	protected boolean validarInicial(String numero, int caracteres){   
+		if(txtRuc.getText().equals("")) {
+			helper.mostrarAlertaAdvertencia("Ingresar RUC", Context.getInstance().getStage());
+			limpiarProveedor();
+			txtRuc.requestFocus();
+			return false;
+		}
+
+        if (numero.length() != caracteres) {
+        	helper.mostrarAlertaAdvertencia("Valor debe tener " + caracteres + " caracteres", Context.getInstance().getStage());
+        	limpiarProveedor();
+            txtRuc.setText("");
+            txtRuc.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+	
+	protected boolean validarCodigoProvincia(String numero){
+        if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
+        	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+        	limpiarProveedor();
+        	txtRuc.setText("");
+            txtRuc.requestFocus();
+            return false;
+        }
+        return true;
+    }
+	
+	protected boolean validarCodigoEstablecimiento(String numero){
+        if (Integer.parseInt(numero) < 1) {
+        	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+        	limpiarProveedor();
+        	txtRuc.setText("");
+            txtRuc.requestFocus();
+            return false;
+        }
+        return true;
+    }
+	
+	boolean validarCedula(String ruc) {
+		int total = 0;  
+		int tamanoLongitudCedula = 13;  
+		int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};  
+		int numeroProviancias = 24;  
+		int tercerdigito = 6;  
+		if (ruc.matches("[0-9]*") && ruc.length() == tamanoLongitudCedula) {  
+			int provincia = Integer.parseInt(ruc.charAt(0) + "" + ruc.charAt(1));  
+			int digitoTres = Integer.parseInt(ruc.charAt(2) + "");  
+			if ((provincia > 0 && provincia <= numeroProviancias) && digitoTres < tercerdigito) {  
+				int digitoVerificadorRecibido = Integer.parseInt(ruc.charAt(9) + "");  
+				for (int i = 0; i < coeficientes.length; i++) {  
+					int valor = Integer.parseInt(coeficientes[i] + "") * Integer.parseInt(ruc.charAt(i) + "");  
+					total = valor >= 10 ? total + (valor - 9) : total + valor;  
+				}  
+				int digitoVerificadorObtenido = total >= 10 ? (total % 10) != 0 ? 10 - (total % 10) : (total % 10) : total;  
+				if (digitoVerificadorObtenido == digitoVerificadorRecibido) {  
+					return true;  
+				}  
+			}
+			return false;
+		}
+		return false;		  
+	}
+	
+	protected boolean validarTercerDigito(String numero, Integer tipo){
+        switch (tipo) {
+            case 1:
+                if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 5) {
+                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+                }
+                break;
+            case 2:
+                if (Integer.parseInt(numero) != 9) {
+                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+                }
+                break;
+
+            case 3:
+                if (Integer.parseInt(numero) != 6) {
+                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+                }
+                break;
+            default:
+            	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+        }
+        return true;
+    }
 }
