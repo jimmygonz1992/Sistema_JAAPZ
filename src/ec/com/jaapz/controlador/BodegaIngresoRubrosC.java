@@ -140,6 +140,7 @@ public class BodegaIngresoRubrosC {
 						}else {
 							if (validarProveedorExiste() == false) {
 								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								proveedorSeleccionado = new Proveedor();
 							}else {
 								recuperarDatos(txtRuc.getText());
 								txtNumero.requestFocus();
@@ -346,19 +347,23 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setFechaModificacion(fecha);
 				proveedorSeleccionado.setEstado("A");
 				
-				/*if(proveedorSeleccionado.getIdProveedor() != null) {
+				
+				
+				if(proveedorSeleccionado.getIdProveedor() != null) {
 					ingreso.setProveedor(proveedorSeleccionado);
 				}else {
 					proveedorSeleccionado.setIdProveedor(null);
-					List<Ingreso> lista = new ArrayList<Proveedor>();
-					lista.add(proveedorSeleccionado);
+					List<Ingreso> lista = new ArrayList<Ingreso>();
+					lista.add(ingreso);
+					proveedorSeleccionado.setIngresos(lista);
 					ingreso.setProveedor(proveedorSeleccionado);
-				}*/
+					
+				}
 				
 				
 				ingreso.setIngresoDetalles(listaAgregadaRubros);
 				ingresoDao.getEntityManager().getTransaction().begin();
-				ingresoDao.getEntityManager().persist(ingreso);		
+				ingresoDao.getEntityManager().persist(proveedorSeleccionado);		
 				
 				for (Kardex kar : listaProductos) {
 					ingresoDao.getEntityManager().persist(kar);	
@@ -508,6 +513,7 @@ public class BodegaIngresoRubrosC {
 		txtCantidadMat.setText("");
 		txtPrecioMat.setText("");
 		txtStockMat.setText("");
+		proveedorSeleccionado = null;	
 	}
 	
 	void limpiarProveedor() {
@@ -517,6 +523,7 @@ public class BodegaIngresoRubrosC {
 		txtApellidosPro.setText("");
 		txtDireccionPro.setText("");
 		txtTelefonoPro.setText("");
+		proveedorSeleccionado = null;
 	}
 	
 	
