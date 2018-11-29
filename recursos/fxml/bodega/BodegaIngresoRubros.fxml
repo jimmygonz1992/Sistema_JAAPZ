@@ -118,12 +118,30 @@
                                 	<TextField fx:id="txtTelefonoPro" prefHeight="25.0" prefWidth="122.0" />
                                 </children>
                             </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label prefWidth="50.0" text="Código:">
+                                       <font>
+                                          <Font name="Arial Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="txtCodigoProv" prefHeight="25.0" prefWidth="173.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                         </children>
                     </GridPane>
                 </children>
             </HBox>
             
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2">
                      <children>
                         <GridPane HBox.hgrow="ALWAYS">
                           <columnConstraints>
@@ -133,9 +151,10 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="0.0" prefWidth="1.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -184,6 +203,24 @@
                               </HBox>
                                  </children>
                         </HBox>
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <children>
+                                    <Label prefWidth="50.0" text="Código:">
+                                       <font>
+                                          <Font name="Arial Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="txtCodigoIng" prefHeight="25.0" prefWidth="173.0" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                            </children>
                         </GridPane>
                      </children>
@@ -304,7 +341,7 @@
           	
           	
 
-            <TableView fx:id="tvDatos" prefHeight="303.0" prefWidth="106.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS"></TableView>
+            <TableView fx:id="tvDatos" prefHeight="303.0" prefWidth="106.0" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.vgrow="ALWAYS" />
             <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="261.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS">
             	<children>
                 	<TextArea fx:id="txtObservaciones" prefHeight="93.0" prefWidth="448.0" />
