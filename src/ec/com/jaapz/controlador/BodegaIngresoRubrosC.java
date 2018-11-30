@@ -60,7 +60,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtCantidadMat;
 	@FXML private TextField txtPrecioMat;
 	@FXML private TextField txtStockMat;
-	
+
 	@FXML private TextField txtProveedor;
 	@FXML private TextField txtRuc;
 	@FXML private TextField txtNombresPro;
@@ -68,7 +68,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtDireccionPro;
 	@FXML private TextField txtTelefonoPro;
 	@FXML private TextArea txtObservaciones;
-	
+
 	private @FXML TableView<IngresoDetalle> tvDatos;
 	ControllerHelper helper = new ControllerHelper();
 	Rubro rubroSeleccionado = new Rubro();
@@ -91,7 +91,7 @@ public class BodegaIngresoRubrosC {
 			txtStockMat.setEditable(false);
 			//dtpFecha.setValue(LocalDate.now());
 			txtRuc.requestFocus();
-			
+
 			//solo letras mayusculas
 			txtProveedor.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -101,7 +101,7 @@ public class BodegaIngresoRubrosC {
 					txtProveedor.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtNombresPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -111,7 +111,7 @@ public class BodegaIngresoRubrosC {
 					txtNombresPro.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtApellidosPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -121,7 +121,7 @@ public class BodegaIngresoRubrosC {
 					txtApellidosPro.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtDireccionPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -131,7 +131,7 @@ public class BodegaIngresoRubrosC {
 					txtDireccionPro.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtNumero.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -141,7 +141,7 @@ public class BodegaIngresoRubrosC {
 					txtNumero.setText(cadena);
 				}
 			});
-			
+
 			//validar solo numeros
 			txtRuc.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -154,7 +154,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 			//validar solo numeros
 			txtTelefonoPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -167,7 +167,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 			//validar solo 10 valores
 			txtTelefonoPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -178,7 +178,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 			txtDescuento.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -195,7 +195,7 @@ public class BodegaIngresoRubrosC {
 					}				
 				}
 			});
-			
+
 			//para añadir a la grilla con enter
 			txtCantidadMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -206,7 +206,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 			//recuperar Proveedor
 			txtRuc.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -228,7 +228,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 			//recuperar factura
 			txtNumero.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -240,12 +240,12 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-			
+
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	boolean validarIngresoExiste() {
 		try {
 			List<Ingreso> listaIngresos;
@@ -259,7 +259,7 @@ public class BodegaIngresoRubrosC {
 			return false;
 		}
 	}
-	
+
 	public void recuperarIngreso(String numIngreso){
 		try{		
 			List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
@@ -278,34 +278,48 @@ public class BodegaIngresoRubrosC {
 				txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
 				dtpFecha.setPromptText(fechaComoCadena);
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
-				txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
-				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));				
+				//txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
+				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));		
+
 				ingreso = listaIngreso.get(i);
-				recuperarDetalleIngreso(listaIngreso.get(i));
-				
+				recuperarDetalleIngreso();
+
 				//proveedorSeleccionado = listaProveedor.get(i);
 			}
 			//if (listaProveedor.size() == 0)
-				//proveedorSeleccionado = new Proveedor();
+			//proveedorSeleccionado = new Proveedor();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private void recuperarDetalleIngreso(Ingreso ing) {
+	private void recuperarDetalleIngreso() {
 		ObservableList<IngresoDetalle> datos = FXCollections.observableArrayList();
 		//txtInspeccion.setText(String.valueOf(liq.getSolInspeccionIn().getIdSolInspeccion()));
 		//txtIdLiquidacion.setText(String.valueOf(liq.getIdLiquidacion()));
 		tvDatos.getColumns().clear();
 		tvDatos.getItems().clear();
-		for (int i=0; i<ing.getIngresoDetalles().size(); i++) {
-			if (ing.getIngresoDetalles().get(i).getEstado().equals("I")){
-				ing.getIngresoDetalles().remove(i);
+		List<IngresoDetalle> lista = new ArrayList<IngresoDetalle>();
+
+		for (int i = 0 ; i < ingreso.getIngresoDetalles().size() ; i++) {
+			if (ingreso.getIngresoDetalles().get(i).getEstado().equals("I"))
+				lista.add(ingreso.getIngresoDetalles().get(i));
+		}
+		System.out.println(lista.size() + " Eliminar");
+	
+
+		for(IngresoDetalle dd : lista) {
+			for(int i = 0 ; i < ingreso.getIngresoDetalles().size() ; i ++) {
+				if(dd.getIdIngresoDet() == ingreso.getIngresoDetalles().get(i).getIdIngresoDet())
+					ingreso.getIngresoDetalles().remove(i);
 			}
 		}
-		
-		datos.setAll(ing.getIngresoDetalles());
+
+		System.out.println(ingreso.getIngresoDetalles().size() + " Resultado");
+		datos.setAll(ingreso.getIngresoDetalles());
+
+
 		TableColumn<IngresoDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 		descripcionColum.setMinWidth(10);
 		descripcionColum.setPrefWidth(200);
@@ -315,7 +329,7 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getRubro().getDescripcion()));
 			}
 		});
-		
+
 		TableColumn<IngresoDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 		cantidadColum.setMinWidth(10);
 		cantidadColum.setPrefWidth(90);
@@ -325,7 +339,7 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()));
 			}
 		});
-		
+
 		TableColumn<IngresoDetalle, String> precioColum = new TableColumn<>("Precio");
 		precioColum.setMinWidth(10);
 		precioColum.setPrefWidth(90);
@@ -335,7 +349,7 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPrecio()));
 			}
 		});
-		
+
 		TableColumn<IngresoDetalle, String> totalColum = new TableColumn<>("Total");
 		totalColum.setMinWidth(10);
 		totalColum.setPrefWidth(90);
@@ -345,13 +359,13 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
 			}
 		});
-		
+
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
-		
+
 		sumarDatos();
 	}
-	
+
 	boolean validarProveedorExiste() {
 		try {
 			List<Proveedor> listaProveedores;
@@ -365,7 +379,7 @@ public class BodegaIngresoRubrosC {
 			return false;
 		}
 	}
-	
+
 	public void recuperarDatos(String ruc){
 		try{
 			List<Proveedor> listaProveedor = new ArrayList<Proveedor>();
@@ -416,7 +430,7 @@ public class BodegaIngresoRubrosC {
 			precioColum.setMinWidth(10);
 			precioColum.setPrefWidth(90);
 			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("precio"));
-			
+
 			TableColumn<IngresoDetalle, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
 			totalColum.setPrefWidth(90);
@@ -429,7 +443,7 @@ public class BodegaIngresoRubrosC {
 
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
-			
+
 			sumarDatos();
 
 			rubroSeleccionado = null;
@@ -438,7 +452,7 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	boolean validarAñadirRubro() {
 		try {
 			if(txtCantidadMat.getText().equals("")) {
@@ -463,7 +477,7 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void sumarDatos() {
 		try {
 			if (tvDatos.getItems().isEmpty()) {
@@ -496,36 +510,49 @@ public class BodegaIngresoRubrosC {
 			String estado = "A";
 			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			Timestamp fecha = new Timestamp(date.getTime());
-			
-			//para guardar proveedor
-			//Proveedor proveedor = new Proveedor();
-			//proveedor.setIdProveedor(null);
-			proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
-			proveedorSeleccionado.setNombres(txtNombresPro.getText());
-			proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
-			proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
-			proveedorSeleccionado.setRuc(txtRuc.getText());
-			proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
-			proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-			proveedorSeleccionado.setFechaCrea(fecha);
-			proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-			proveedorSeleccionado.setFechaModificacion(fecha);
-			proveedorSeleccionado.setEstado("A");
-			
+
+			if(ingreso == null) {
+				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
+				proveedorSeleccionado.setNombres(txtNombresPro.getText());
+				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
+				proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
+				proveedorSeleccionado.setRuc(txtRuc.getText());
+				proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
+				proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				proveedorSeleccionado.setFechaCrea(fecha);
+				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+				proveedorSeleccionado.setFechaModificacion(fecha);
+				proveedorSeleccionado.setEstado("A");
+				ingreso.setProveedor(proveedorSeleccionado);
+			}else {
+				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
+				ingreso.getProveedor().setNombreComercial(txtProveedor.getText());
+				ingreso.getProveedor().setNombres(txtNombresPro.getText());
+				ingreso.getProveedor().setApellidos(txtApellidosPro.getText());
+				ingreso.getProveedor().setDireccion(txtDireccionPro.getText());
+				ingreso.getProveedor().setRuc(txtRuc.getText());
+				ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
+				ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				ingreso.getProveedor().setFechaCrea(fecha);
+				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+				ingreso.getProveedor().setFechaModificacion(fecha);
+				ingreso.getProveedor().setEstado("A");
+			}
+
+
 			//para guardar ingreso	
 			if(ingreso == null)
 				ingreso = new Ingreso();
-			
+
 			//ingreso.setIdIngreso(null);
 			ingreso.setFecha(fecha);
-			ingreso.setProveedor(proveedorSeleccionado);
 			ingreso.setNumeroIngreso(txtNumero.getText());
 			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
 			ingreso.setEstado(estado);
-			
-			
+
+
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if (ingreso.getIdIngreso() == null) {
@@ -535,7 +562,7 @@ public class BodegaIngresoRubrosC {
 						det.setIdIngresoDet(null);
 						det.setEstado("A");
 						det.setIngreso(ingreso);
-						
+
 						//para lo del kardex
 						Kardex kardex = new Kardex();
 						//kardex.setIdKardex(null);
@@ -556,7 +583,7 @@ public class BodegaIngresoRubrosC {
 					ingreso.setIngresoDetalles(listaAgregadaRubros);
 					//empieza la transaccion
 					ingresoDao.getEntityManager().getTransaction().begin();
-					
+
 					//aqui voy a intentar guardar y tengo q preguntar si es nuevo
 					//o sino solo para editar
 					if(txtCodigoIng.getText().equals("0")) {//inserta nuevo ingreso
@@ -572,19 +599,16 @@ public class BodegaIngresoRubrosC {
 							ingresoDao.getEntityManager().merge(kar);	
 						}
 					}
-					
+
 					if (txtCodigoProv.getText().equals("0")) {// inserta nuevo proveedor
 						proveedorSeleccionado.setIdProveedor(null);
 						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
-					}else {//modifica
-						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
-						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
 					}
 					//ingresoDao.getEntityManager().persist(ingreso);				
 					ingresoDao.getEntityManager().getTransaction().commit();
-						
+
 					actualizarListaRubros();
-					
+
 					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
 					limpiarProveedor();
@@ -603,23 +627,6 @@ public class BodegaIngresoRubrosC {
 							det.setEstado("A");
 							det.setIngreso(ingreso);
 							ingreso.getIngresoDetalles().add(det);
-							
-							/*
-							//para lo del kardex
-							Kardex kardex = new Kardex();
-							//kardex.setIdKardex(null);
-							kardex.setRubro(det.getRubro());
-							kardex.setFecha(fecha);
-							kardex.setTipoDocumento("Factura #");
-							kardex.setNumDocumento(txtNumero.getText());
-							kardex.setDetalleOperacion(null);
-							kardex.setCantidad(det.getCantidad());
-							kardex.setUnidadMedida("Unidad");
-							kardex.setValorUnitario(det.getPrecio());
-							kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-							kardex.setTipoMovimiento("ING");
-							kardex.setEstado("A");								
-							listaProductos.add(kardex);*/
 						}else {
 							for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
 								if (!integer.contains(deta.getIdIngresoDet())) {
@@ -631,7 +638,7 @@ public class BodegaIngresoRubrosC {
 					ingresoDao.getEntityManager().getTransaction().begin();
 					ingresoDao.getEntityManager().merge(ingreso);
 					ingresoDao.getEntityManager().getTransaction().commit();
-					
+
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
 					limpiarProveedor();
@@ -639,7 +646,7 @@ public class BodegaIngresoRubrosC {
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}
-				
+
 			}
 			ingreso = null;
 			proveedorSeleccionado = null;
@@ -649,8 +656,8 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
-	
+
+
 	//graba solo lo primero los ingresos y el detalle
 	/*public void grabar() {
 		try {
@@ -674,14 +681,14 @@ public class BodegaIngresoRubrosC {
 					det.setIngreso(ingreso);
 					listaAgregadaRubros.add(det);
 				}
-				
+
 				ingreso.setIngresoDetalles(listaAgregadaRubros);
 				ingresoDao.getEntityManager().getTransaction().begin();
 				ingresoDao.getEntityManager().persist(ingreso);				
 				ingresoDao.getEntityManager().getTransaction().commit();
-					
+
 				actualizarListaRubros();
-				
+
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				limpiar();
 				txtNumero.setText("");
@@ -694,7 +701,7 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}*/
-	
+
 	//Intento grabar todo solo graba hasta kardex
 	/*public void grabar() {
 		try {
@@ -704,7 +711,7 @@ public class BodegaIngresoRubrosC {
 			if(result.get() == ButtonType.OK){
 				Ingreso ingreso = new Ingreso();
 				List<Kardex> listaProductos = new ArrayList<Kardex>();
-				
+
 				String estado = "A";		
 				ingreso.setIdIngreso(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
@@ -716,13 +723,13 @@ public class BodegaIngresoRubrosC {
 				ingreso.setNumeroIngreso(txtNumero.getText());
 				ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.setEstado(estado);
-								
+
 				List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
 				for(IngresoDetalle det : tvDatos.getItems()) {
 					det.setIdIngresoDet(null);
 					det.setEstado("A");
 					det.setIngreso(ingreso);
-					
+
 					Kardex kardex = new Kardex();
 					kardex.setIdKardex(null);
 					kardex.setRubro(det.getRubro());
@@ -736,11 +743,11 @@ public class BodegaIngresoRubrosC {
 					kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
 					kardex.setTipoMovimiento("ING");
 					kardex.setEstado("A");
-										
+
 					listaProductos.add(kardex);
 					listaAgregadaRubros.add(det);
 				}
-				
+
 				System.out.println("hola");
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
@@ -753,9 +760,9 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				proveedorSeleccionado.setFechaModificacion(fecha);
 				proveedorSeleccionado.setEstado("A");
-				
-				
-				
+
+
+
 				if(proveedorSeleccionado.getIdProveedor() != null) {
 					ingreso.setProveedor(proveedorSeleccionado);
 				}else {
@@ -764,22 +771,22 @@ public class BodegaIngresoRubrosC {
 					lista.add(ingreso);
 					proveedorSeleccionado.setIngresos(lista);
 					ingreso.setProveedor(proveedorSeleccionado);
-					
+
 				}
-				
-				
+
+
 				ingreso.setIngresoDetalles(listaAgregadaRubros);
 				ingresoDao.getEntityManager().getTransaction().begin();
 				ingresoDao.getEntityManager().persist(proveedorSeleccionado);		
-				
+
 				for (Kardex kar : listaProductos) {
 					ingresoDao.getEntityManager().persist(kar);	
 				}
-				
+
 				ingresoDao.getEntityManager().getTransaction().commit();
-					
+
 				actualizarListaRubros();
-				
+
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				limpiar();
 				txtNumero.setText("");
@@ -792,7 +799,7 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}*/
-	
+
 	boolean validarDatos() {
 		try {
 			if(txtRuc.getText().equals("")) {
@@ -800,49 +807,49 @@ public class BodegaIngresoRubrosC {
 				txtRuc.requestFocus();
 				return false;
 			}
-			
+
 			if(txtProveedor.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Nombre Comercial del Proveedor", Context.getInstance().getStage());
 				txtProveedor.requestFocus();
 				return false;
 			}
-			
+
 			if(txtNombresPro.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Nombres del Proveedor", Context.getInstance().getStage());
 				txtNombresPro.requestFocus();
 				return false;
 			}
-			
+
 			if(txtApellidosPro.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Apellidos del Proveedor", Context.getInstance().getStage());
 				txtApellidosPro.requestFocus();
 				return false;
 			}
-			
+
 			if(txtDireccionPro.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Dirección del Proveedor", Context.getInstance().getStage());
 				txtDireccionPro.requestFocus();
 				return false;
 			}
-			
+
 			if(txtTelefonoPro.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Teléfono del Proveedor", Context.getInstance().getStage());
 				txtTelefonoPro.requestFocus();
 				return false;
 			}
-			
+
 			if(txtNumero.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Nº Factura de Compra", Context.getInstance().getStage());
 				txtNumero.requestFocus();
 				return false;
 			}		
-			
+
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Ingresar Fecha", Context.getInstance().getStage());
 				dtpFecha.requestFocus();
 				return false;
 			}
-			
+
 			if(tvDatos.getItems().isEmpty()) {
 				helper.mostrarAlertaAdvertencia("Ingresar Rubros", Context.getInstance().getStage());
 				tvDatos.requestFocus();
@@ -921,7 +928,7 @@ public class BodegaIngresoRubrosC {
 		txtStockMat.setText("");
 		//proveedorSeleccionado = null;	
 	}
-	
+
 	void limpiarProveedor() {
 		txtCodigoProv.setText("0");
 		txtProveedor.setText("");
@@ -932,7 +939,7 @@ public class BodegaIngresoRubrosC {
 		txtTelefonoPro.setText("");
 		//proveedorSeleccionado = null;
 	}
-	
+
 	void limpiarIngreso() {
 		txtCodigoIng.setText("0");
 		dtpFecha.setAccessibleText(null);
@@ -943,24 +950,24 @@ public class BodegaIngresoRubrosC {
 		tvDatos.getColumns().clear();
 		tvDatos.getItems().clear();
 	}
-	
-	
-	public boolean validarRucPersonaNatural(String numero) {
-        try {
-            validarInicial(numero, 13);
-            validarCodigoProvincia(numero.substring(0, 2));
-            validarTercerDigito(String.valueOf(numero.charAt(2)), Constantes.getTipoRucNatural());
-            validarCodigoEstablecimiento(numero.substring(10, 13));
-            validarCedula(numero.substring(0, 9));
-        } catch (Exception ex) {
-        	limpiarProveedor();
-        	System.out.println(ex.getMessage());
-            return false; 
-        }
 
-        return true;
-    }
-	
+
+	public boolean validarRucPersonaNatural(String numero) {
+		try {
+			validarInicial(numero, 13);
+			validarCodigoProvincia(numero.substring(0, 2));
+			validarTercerDigito(String.valueOf(numero.charAt(2)), Constantes.getTipoRucNatural());
+			validarCodigoEstablecimiento(numero.substring(10, 13));
+			validarCedula(numero.substring(0, 9));
+		} catch (Exception ex) {
+			limpiarProveedor();
+			System.out.println(ex.getMessage());
+			return false; 
+		}
+
+		return true;
+	}
+
 	protected boolean validarInicial(String numero, int caracteres){   
 		if(txtRuc.getText().equals("")) {
 			helper.mostrarAlertaAdvertencia("Ingresar RUC", Context.getInstance().getStage());
@@ -969,39 +976,39 @@ public class BodegaIngresoRubrosC {
 			return false;
 		}
 
-        if (numero.length() != caracteres) {
-        	helper.mostrarAlertaAdvertencia("Valor debe tener " + caracteres + " caracteres", Context.getInstance().getStage());
-        	limpiarProveedor();
-            txtRuc.setText("");
-            txtRuc.requestFocus();
-            return false;
-        }
+		if (numero.length() != caracteres) {
+			helper.mostrarAlertaAdvertencia("Valor debe tener " + caracteres + " caracteres", Context.getInstance().getStage());
+			limpiarProveedor();
+			txtRuc.setText("");
+			txtRuc.requestFocus();
+			return false;
+		}
 
-        return true;
-    }
-	
+		return true;
+	}
+
 	protected boolean validarCodigoProvincia(String numero){
-        if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
-        	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-        	limpiarProveedor();
-        	txtRuc.setText("");
-            txtRuc.requestFocus();
-            return false;
-        }
-        return true;
-    }
-	
+		if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
+			helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			limpiarProveedor();
+			txtRuc.setText("");
+			txtRuc.requestFocus();
+			return false;
+		}
+		return true;
+	}
+
 	protected boolean validarCodigoEstablecimiento(String numero){
-        if (Integer.parseInt(numero) < 1) {
-        	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-        	limpiarProveedor();
-        	txtRuc.setText("");
-            txtRuc.requestFocus();
-            return false;
-        }
-        return true;
-    }
-	
+		if (Integer.parseInt(numero) < 1) {
+			helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			limpiarProveedor();
+			txtRuc.setText("");
+			txtRuc.requestFocus();
+			return false;
+		}
+		return true;
+	}
+
 	boolean validarCedula(String ruc) {
 		int total = 0;  
 		int tamanoLongitudCedula = 13;  
@@ -1026,28 +1033,28 @@ public class BodegaIngresoRubrosC {
 		}
 		return false;		  
 	}
-	
-	protected boolean validarTercerDigito(String numero, Integer tipo){
-        switch (tipo) {
-            case 1:
-                if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 5) {
-                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-                }
-                break;
-            case 2:
-                if (Integer.parseInt(numero) != 9) {
-                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-                }
-                break;
 
-            case 3:
-                if (Integer.parseInt(numero) != 6) {
-                	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-                }
-                break;
-            default:
-            	helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
-        }
-        return true;
-    }
+	protected boolean validarTercerDigito(String numero, Integer tipo){
+		switch (tipo) {
+		case 1:
+			if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 5) {
+				helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			}
+			break;
+		case 2:
+			if (Integer.parseInt(numero) != 9) {
+				helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			}
+			break;
+
+		case 3:
+			if (Integer.parseInt(numero) != 6) {
+				helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			}
+			break;
+		default:
+			helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+		}
+		return true;
+	}
 }
