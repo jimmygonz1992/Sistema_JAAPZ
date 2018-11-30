@@ -77,7 +77,7 @@ public class BodegaIngresoRubrosC {
 	IngresoDAO ingresoDao = new IngresoDAO();
 	RubroDAO rubroDAO = new RubroDAO();
 	ProveedorDAO proveedorDAO = new ProveedorDAO();
-	
+	Ingreso ingreso;
 	public void initialize(){
 		try {
 			int maxLength = 10;
@@ -236,7 +236,6 @@ public class BodegaIngresoRubrosC {
 					if (ke.getCode().equals(KeyCode.ENTER)){
 						if (validarIngresoExiste() == true) {
 							recuperarIngreso(txtNumero.getText());
-							//proveedorSeleccionado = new Proveedor();
 						}
 					}
 				}
@@ -281,6 +280,7 @@ public class BodegaIngresoRubrosC {
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
 				txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
 				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));				
+				ingreso = listaIngreso.get(i);
 				recuperarDetalleIngreso(listaIngreso.get(i));
 				
 				//proveedorSeleccionado = listaProveedor.get(i);
@@ -294,20 +294,13 @@ public class BodegaIngresoRubrosC {
 	
 	@SuppressWarnings("unchecked")
 	private void recuperarDetalleIngreso(Ingreso ing) {
-		List<IngresoDetalle> detalle = new ArrayList<IngresoDetalle>();
 		ObservableList<IngresoDetalle> datos = FXCollections.observableArrayList();
 		//txtInspeccion.setText(String.valueOf(liq.getSolInspeccionIn().getIdSolInspeccion()));
 		//txtIdLiquidacion.setText(String.valueOf(liq.getIdLiquidacion()));
 		tvDatos.getColumns().clear();
 		tvDatos.getItems().clear();
-		for(IngresoDetalle detallePrevia : ing.getIngresoDetalles()) {
-			IngresoDetalle detAdd = new IngresoDetalle();
-			detAdd.setRubro(detallePrevia.getRubro());
-			detAdd.setCantidad(detallePrevia.getCantidad());
-			detAdd.setPrecio(detallePrevia.getPrecio());
-			detalle.add(detAdd);
-		}
-		datos.setAll(detalle);
+		
+		datos.setAll(ing.getIngresoDetalles());
 		TableColumn<IngresoDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 		descripcionColum.setMinWidth(10);
 		descripcionColum.setPrefWidth(200);
@@ -514,8 +507,10 @@ public class BodegaIngresoRubrosC {
 			proveedorSeleccionado.setFechaModificacion(fecha);
 			proveedorSeleccionado.setEstado("A");
 			
-			//para guardar ingreso			
-			Ingreso ingreso = new Ingreso();
+			//para guardar ingreso	
+			if(ingreso == null)
+				ingreso = new Ingreso();
+			
 			//ingreso.setIdIngreso(null);
 			ingreso.setFecha(fecha);
 			ingreso.setProveedor(proveedorSeleccionado);
@@ -525,71 +520,110 @@ public class BodegaIngresoRubrosC {
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
 			ingreso.setEstado(estado);
 			
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
-				List<Kardex> listaProductos = new ArrayList<Kardex>();
-				for(IngresoDetalle det : tvDatos.getItems()) {
-					det.setIdIngresoDet(null);
-					det.setEstado("A");
-					det.setIngreso(ingreso);
-					
-					//para lo del kardex
-					Kardex kardex = new Kardex();
-					//kardex.setIdKardex(null);
-					kardex.setRubro(det.getRubro());
-					kardex.setFecha(fecha);
-					kardex.setTipoDocumento("Factura #");
-					kardex.setNumDocumento(txtNumero.getText());
-					kardex.setDetalleOperacion(null);
-					kardex.setCantidad(det.getCantidad());
-					kardex.setUnidadMedida("Unidad");
-					kardex.setValorUnitario(det.getPrecio());
-					kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-					kardex.setTipoMovimiento("ING");
-					kardex.setEstado("A");								
-					listaProductos.add(kardex);
-					listaAgregadaRubros.add(det);
-				}
-				ingreso.setIngresoDetalles(listaAgregadaRubros);
-				
-				//empieza la transaccion
-				ingresoDao.getEntityManager().getTransaction().begin();
-				
-				//aqui voy a intentar guardar y tengo q preguntar si es nuevo
-				//o sino solo para editar
-				if(txtCodigoIng.getText().equals("0")) {//inserta nuevo ingreso
-					ingreso.setIdIngreso(null);
-					ingresoDao.getEntityManager().persist(ingreso);
-					for (Kardex kar : listaProductos) {
-						ingresoDao.getEntityManager().persist(kar);	
+				if (ingreso.getIdIngreso() == null) {
+					List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
+					List<Kardex> listaProductos = new ArrayList<Kardex>();
+					for(IngresoDetalle det : tvDatos.getItems()) {
+						det.setIdIngresoDet(null);
+						det.setEstado("A");
+						det.setIngreso(ingreso);
+						
+						//para lo del kardex
+						Kardex kardex = new Kardex();
+						//kardex.setIdKardex(null);
+						kardex.setRubro(det.getRubro());
+						kardex.setFecha(fecha);
+						kardex.setTipoDocumento("Factura #");
+						kardex.setNumDocumento(txtNumero.getText());
+						kardex.setDetalleOperacion(null);
+						kardex.setCantidad(det.getCantidad());
+						kardex.setUnidadMedida("Unidad");
+						kardex.setValorUnitario(det.getPrecio());
+						kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+						kardex.setTipoMovimiento("ING");
+						kardex.setEstado("A");								
+						listaProductos.add(kardex);
+						listaAgregadaRubros.add(det);
 					}
-				}else {//modifica
-					ingreso.setIdIngreso(Integer.parseInt(txtCodigoIng.getText()));
+					ingreso.setIngresoDetalles(listaAgregadaRubros);
+					//empieza la transaccion
+					ingresoDao.getEntityManager().getTransaction().begin();
+					
+					//aqui voy a intentar guardar y tengo q preguntar si es nuevo
+					//o sino solo para editar
+					if(txtCodigoIng.getText().equals("0")) {//inserta nuevo ingreso
+						ingreso.setIdIngreso(null);
+						ingresoDao.getEntityManager().persist(ingreso);
+						for (Kardex kar : listaProductos) {
+							ingresoDao.getEntityManager().persist(kar);	
+						}
+					}else {//modifica
+						ingreso.setIdIngreso(Integer.parseInt(txtCodigoIng.getText()));
+						ingresoDao.getEntityManager().merge(ingreso);
+						for (Kardex kar : listaProductos) {
+							ingresoDao.getEntityManager().merge(kar);	
+						}
+					}
+					
+					if (txtCodigoProv.getText().equals("0")) {// inserta nuevo proveedor
+						proveedorSeleccionado.setIdProveedor(null);
+						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
+					}else {//modifica
+						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
+						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
+					}
+					//ingresoDao.getEntityManager().persist(ingreso);				
+					ingresoDao.getEntityManager().getTransaction().commit();
+						
+					actualizarListaRubros();
+					
+					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+					limpiar();
+					limpiarProveedor();
+					txtNumero.setText("");
+					tvDatos.getColumns().clear();
+					tvDatos.getItems().clear();
+				}else {
+					for(IngresoDetalle det : tvDatos.getItems()) {
+						if(det.getIdIngresoDet() == null) {
+							det.setIdIngresoDet(null);
+							det.setEstado("A");
+							det.setIngreso(ingreso);
+							ingreso.getIngresoDetalles().add(det);
+							
+							/*
+							//para lo del kardex
+							Kardex kardex = new Kardex();
+							//kardex.setIdKardex(null);
+							kardex.setRubro(det.getRubro());
+							kardex.setFecha(fecha);
+							kardex.setTipoDocumento("Factura #");
+							kardex.setNumDocumento(txtNumero.getText());
+							kardex.setDetalleOperacion(null);
+							kardex.setCantidad(det.getCantidad());
+							kardex.setUnidadMedida("Unidad");
+							kardex.setValorUnitario(det.getPrecio());
+							kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+							kardex.setTipoMovimiento("ING");
+							kardex.setEstado("A");								
+							listaProductos.add(kardex);*/
+						}
+					}
+					ingresoDao.getEntityManager().getTransaction().begin();
 					ingresoDao.getEntityManager().merge(ingreso);
-					for (Kardex kar : listaProductos) {
-						ingresoDao.getEntityManager().merge(kar);	
-					}
-				}
-				
-				if (txtCodigoProv.getText().equals("0")) {// inserta nuevo proveedor
-					proveedorSeleccionado.setIdProveedor(null);
-					ingresoDao.getEntityManager().persist(proveedorSeleccionado);
-				}else {//modifica
-					proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
-					ingresoDao.getEntityManager().merge(proveedorSeleccionado);
-				}
-				//ingresoDao.getEntityManager().persist(ingreso);				
-				ingresoDao.getEntityManager().getTransaction().commit();
+					ingresoDao.getEntityManager().getTransaction().commit();
 					
-				actualizarListaRubros();
+					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
+					limpiar();
+					limpiarProveedor();
+					txtNumero.setText("");
+					tvDatos.getColumns().clear();
+					tvDatos.getItems().clear();
+				}
 				
-				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				limpiar();
-				limpiarProveedor();
-				txtNumero.setText("");
-				tvDatos.getColumns().clear();
-				tvDatos.getItems().clear();
 			}
 		}catch(Exception ex) {
 			ingresoDao.getEntityManager().getTransaction().rollback();
