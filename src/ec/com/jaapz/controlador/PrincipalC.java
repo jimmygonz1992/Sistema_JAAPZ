@@ -16,6 +16,7 @@ import ec.com.jaapz.modelo.SegPermiso;
 import ec.com.jaapz.modelo.SegPermisoDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.event.Event;
@@ -53,6 +54,7 @@ public class PrincipalC {
 
 	int contador = 0,mayor = 0;
 	public void initialize(){
+		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Calendar fecha = new GregorianCalendar();
 		int anio,mes,dia;
