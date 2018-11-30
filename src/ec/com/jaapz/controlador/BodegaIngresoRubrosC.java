@@ -70,7 +70,7 @@ public class BodegaIngresoRubrosC {
 	private @FXML TableView<IngresoDetalle> tvDatos;
 	ControllerHelper helper = new ControllerHelper();
 	Rubro rubroSeleccionado = new Rubro();
-	Proveedor proveedorSeleccionado;
+	Proveedor proveedorSeleccionado = new Proveedor();
 	SegUsuario usuarioLogueado = new SegUsuario();
 	IngresoDAO ingresoDao = new IngresoDAO();
 	RubroDAO rubroDAO = new RubroDAO();
@@ -335,6 +335,8 @@ public class BodegaIngresoRubrosC {
 					listaProductos.add(kardex);
 					listaAgregadaRubros.add(det);
 				}
+				
+				System.out.println("hola");
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
 				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
