@@ -299,6 +299,11 @@ public class BodegaIngresoRubrosC {
 		//txtIdLiquidacion.setText(String.valueOf(liq.getIdLiquidacion()));
 		tvDatos.getColumns().clear();
 		tvDatos.getItems().clear();
+		for (int i=0; i<ing.getIngresoDetalles().size(); i++) {
+			if (ing.getIngresoDetalles().get(i).getEstado().equals("I")){
+				ing.getIngresoDetalles().remove(i);
+			}
+		}
 		
 		datos.setAll(ing.getIngresoDetalles());
 		TableColumn<IngresoDetalle, String> descripcionColum = new TableColumn<>("Descripción");
@@ -587,6 +592,11 @@ public class BodegaIngresoRubrosC {
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}else {
+					List<Integer> integer = new ArrayList<Integer>();
+					for (IngresoDetalle detalle : tvDatos.getItems()) {
+						if (detalle.getIdIngresoDet() != null)
+							integer.add(detalle.getIdIngresoDet());
+					}
 					for(IngresoDetalle det : tvDatos.getItems()) {
 						if(det.getIdIngresoDet() == null) {
 							det.setIdIngresoDet(null);
@@ -610,6 +620,12 @@ public class BodegaIngresoRubrosC {
 							kardex.setTipoMovimiento("ING");
 							kardex.setEstado("A");								
 							listaProductos.add(kardex);*/
+						}else {
+							for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
+								if (!integer.contains(deta.getIdIngresoDet())) {
+									deta.setEstado("I");
+								}
+							}
 						}
 					}
 					ingresoDao.getEntityManager().getTransaction().begin();
@@ -625,6 +641,8 @@ public class BodegaIngresoRubrosC {
 				}
 				
 			}
+			ingreso = null;
+			proveedorSeleccionado = null;
 		}catch(Exception ex) {
 			ingresoDao.getEntityManager().getTransaction().rollback();
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
