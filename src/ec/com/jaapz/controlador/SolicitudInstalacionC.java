@@ -62,6 +62,7 @@ public class SolicitudInstalacionC {
     Genero[] genero = Genero.values();
     SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
     TipoSolicitudDAO tipoSolicitudDAO = new TipoSolicitudDAO();
+    Cliente clienteSeleccionado = new  Cliente();
     
     public void initialize() {
     	try {
@@ -362,8 +363,37 @@ public class SolicitudInstalacionC {
 
     
     public void buscarIns() {
-
+    	try{
+			helper.abrirPantallaModal("/clientes/ClientesListaClientes.fxml","Listado de Clientes", Context.getInstance().getStage());
+			if (Context.getInstance().getCliente() != null) {
+				Cliente datoSeleccionado = Context.getInstance().getCliente();
+				clienteSeleccionado = datoSeleccionado;
+				txtCedula.setText(clienteSeleccionado.getCedula());
+				recuperarDatos(clienteSeleccionado.getCedula());
+				Context.getInstance().setCliente(null);
+			}
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
     }
+    void llenarDatosIns(Cliente datosSeleccionado) {
+		try {
+			txtTelefono.setText(datosSeleccionado.getTelefono());
+			txtCedula.setText(datosSeleccionado.getCedula());
+			txtNombres.setText(datosSeleccionado.getNombre());
+			txtApellidos.setText(datosSeleccionado.getApellido());
+			if(datosSeleccionado.getEstado().equals("A"))
+				txtEstado.setText("Activo");
+			else
+				txtEstado.setText("Inactivo");
+			for(Genero g : genero){
+				if(g.toString().equals(datosSeleccionado.getGenero()))
+					cboGenero.getSelectionModel().select(g);
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
     boolean validarCedula(String cedula) {
 		int total = 0;  
 		int tamanoLongitudCedula = 10;  

@@ -10,7 +10,7 @@
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0"
 	prefWidth="634.0" xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="ec.com.jaapz.controlador.SolicitudAsignacionesC">
+	fx:controller="ec.com.jaapz.controlador.SolicitudAsignacionInsC">
 	<children>
 		<GridPane layoutX="85.0" layoutY="119.0"
 			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
@@ -28,7 +28,7 @@
 				</Label>
 				<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0"
 					GridPane.columnIndex="1" GridPane.columnSpan="5"
-					GridPane.rowIndex="7">
+					GridPane.rowIndex="7" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10">
 					<children>
 						<Button fx:id="btnGrabarAsig" alignment="BOTTOM_CENTER"
 							contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false"

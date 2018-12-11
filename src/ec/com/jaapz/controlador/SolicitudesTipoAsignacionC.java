@@ -13,7 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
-public class SolicitudesRegistroC {
+public class SolicitudesTipoAsignacionC {
 	@FXML private ComboBox<TipoSolicitud> cboTipoSolicitud;
 	@FXML private Button btnCargar;
 	@FXML private AnchorPane apContenido;
@@ -47,7 +47,7 @@ public class SolicitudesRegistroC {
 				return;
 			}
 			if(cboTipoSolicitud.getSelectionModel().getSelectedItem().getIdTipoSolicitud() == 1) { // es una solicitud de inspeccion
-				helper.mostrarVentanaContenedor("/solicitudes/SolicitudInstalacion.fxml", apContenido);
+				helper.mostrarVentanaContenedor("/solicitudes/SolicitudesAsignacionIns.fxml", apContenido);
 				System.out.println("aqui");
 			}
 		}catch(Exception ex) {

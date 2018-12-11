@@ -16,7 +16,8 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="AperturaLectura.findAll", query="SELECT a FROM AperturaLectura a where a.estado = 'A'"),
 	@NamedQuery(name="AperturaLectura.buscarCiclo", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'EN PROCESO'"),
-	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura")
+	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura"),
+	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio")
 })
 public class AperturaLectura implements Serializable {
 	private static final long serialVersionUID = 1L;

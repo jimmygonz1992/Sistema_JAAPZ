@@ -62,11 +62,11 @@ public class ClientesListadoClientesC {
 			TableColumn<Cliente, String> nombresColum = new TableColumn<>("Nombres");
 			nombresColum.setMinWidth(10);
 			nombresColum.setPrefWidth(200);
-			nombresColum.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombres"));
+			nombresColum.setCellValueFactory(new PropertyValueFactory<Cliente, String>("nombre"));
 			TableColumn<Cliente, String> apellidosColum = new TableColumn<>("Apellidos");
 			apellidosColum.setMinWidth(10);
 			apellidosColum.setPrefWidth(200);
-			apellidosColum.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellidos"));
+			apellidosColum.setCellValueFactory(new PropertyValueFactory<Cliente, String>("apellido"));
 			TableColumn<Cliente, String> generoColum = new TableColumn<>("Género");
 			generoColum.setMinWidth(10);
 			generoColum.setPrefWidth(100);
