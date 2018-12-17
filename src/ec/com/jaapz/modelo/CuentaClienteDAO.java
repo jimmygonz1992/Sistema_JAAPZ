@@ -34,4 +34,24 @@ public class CuentaClienteDAO extends ClaseDAO{
 		resultado = (List<CuentaCliente>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getExisteCuenta(Integer cuenta){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.existeCuenta");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("cuenta", cuenta);
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getExisteCuentaMedidor(String medidor){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.existeCuentaMedidor");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("medidor", medidor);
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
 }

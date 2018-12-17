@@ -24,11 +24,11 @@ public class SolicitudesRegistroC {
 	public void initialize() {
 		try {
 			llenarCombosIns();
-			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 	private void llenarCombosIns() {
 		try{
 			cboTipoSolicitud.setPromptText("Seleccione tipo de solicitud");
@@ -40,15 +40,21 @@ public class SolicitudesRegistroC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 	public void cargarContenido() {
 		try {
 			if(cboTipoSolicitud.getSelectionModel().getSelectedIndex() == -1) {
-				helper.mostrarAlertaAdvertencia("Debe seleccionar tipo de solicitus", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Debe seleccionar tipo de solicitud", Context.getInstance().getStage());
 				return;
 			}
-			if(cboTipoSolicitud.getSelectionModel().getSelectedItem().getIdTipoSolicitud() == 1) { // es una solicitud de inspeccion
+			
+			if(cboTipoSolicitud.getSelectionModel().getSelectedItem().getIdTipoSolicitud() == 1) { // es una solicitud de inspeccion de instalacion
 				helper.mostrarVentanaContenedor("/solicitudes/SolicitudInstalacion.fxml", apContenido);
 				System.out.println("aqui");
+			}
+			
+			if(cboTipoSolicitud.getSelectionModel().getSelectedItem().getIdTipoSolicitud() == 2) { // es una solicitud de reparacion
+				helper.mostrarVentanaContenedor("/solicitudes/SolicitudReparacion.fxml", apContenido);
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

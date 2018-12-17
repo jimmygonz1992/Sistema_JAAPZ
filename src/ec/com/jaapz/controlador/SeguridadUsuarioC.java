@@ -196,7 +196,7 @@ public class SeguridadUsuarioC {
 
 		txtUsuario.setEditable(false);
 		txtClave.setEditable(false);
-		txtCodigo.setVisible(false);
+		//txtCodigo.setVisible(false);
 		lbCodigo.setVisible(false);
 		chkEstado.setSelected(true);
 	}
@@ -206,6 +206,7 @@ public class SeguridadUsuarioC {
 			List<SegUsuario> listaUsuario = new ArrayList<SegUsuario>();
 			listaUsuario = segUsuarioDAO.getRecuperaUsuario(cedula);
 			for(int i = 0 ; i < listaUsuario.size() ; i ++) {
+				txtCodigo.setText(Integer.toString(listaUsuario.get(i).getIdUsuario()));
 				txtCedula.setText(listaUsuario.get(i).getCedula());
 				txtNombres.setText(listaUsuario.get(i).getNombre());
 				txtApellidos.setText(listaUsuario.get(i).getApellido());
