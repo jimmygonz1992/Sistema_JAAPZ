@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes_no_registrados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fd80a3d4-8ef5-4228-a581-84f51391a910">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion pg"/>
+	<parameter name="ID_APERTURA" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT cl.cedula,
+	cl.nombre,
+	cl.apellido,
+	cl.direccion,
+	me.codigo,pl.lectura_actual,pl.lectura_anterior,pl.consumo
+FROM cliente cl,
+	cuenta_cliente cu,
+	planilla pl,
+	medidor me
+WHERE 
+	 cl.id_cliente = cu.id_cliente 
+	 AND cu.id_medidor = me.id_medidor 
+	 AND pl.id_cuenta = cu.id_cuenta 
+	 AND pl.id_apertura = $P{ID_APERTURA} 
+	 AND pl.consumo = 0
+	 AND pl.estado = 'A'
+	 AND cu.estado = 'A'
+	 AND cl.estado = 'A']]>
+	</queryString>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="lectura_actual" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="lectura_actual"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="lectura_anterior" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="lectura_anterior"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="consumo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="consumo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<image>
+				<reportElement x="33" y="0" width="56" height="34" uuid="0f396d43-73df-4556-9e3d-94421a4b60b6"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="4" width="400" height="13" uuid="9ecec9f3-8b47-4928-b981-c61258817e52"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUNTA ADMINISTRADORA DE AGUA POTABLE - ZAPOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="19" width="400" height="13" uuid="a02c2e48-db1e-4ecb-b1d1-45e41e270d7b"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FUNDADO EL 2 DE OCTUBRE DEL 2001]]></text>
+			</staticText>
+			<line>
+				<reportElement x="31" y="40" width="490" height="1" uuid="7f7b2bc1-d92b-4801-84c0-e46b21153f17"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="10" width="560" height="20" uuid="17f06dee-098b-476e-b96b-355d27da4a20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLIENTES SIN REGISTRO DE LECTURAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="40" width="60" height="20" uuid="3a835033-0d5e-443d-91b7-96709bc3b237">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f90b1f8d-df4d-444d-860d-d8af2e784b05"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÉDULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="40" width="100" height="20" uuid="8e76d303-9d90-4c4a-a210-59bea5eee0b9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a265c43-4b70-44fe-b464-27b19bf7b317"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="65" y="40" width="100" height="20" uuid="7e5cc3a7-ecf2-4b50-8f1f-faad07dd2dc5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e70e6ebe-2794-454f-b206-111c1cbafa14"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="40" width="84" height="20" uuid="43352d0b-b35a-4748-8cb0-b3964e4e923c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55530c13-1782-43be-9b5c-dfa0d191e2bc"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓD. MEDIDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="40" width="68" height="20" uuid="53722fc0-e559-4369-ad5d-0da32f1cd714">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1dc0ebd9-0c2c-49eb-94e8-cffb87651429"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LEC ANTERIOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="40" width="65" height="20" uuid="763a2ecc-c6a2-4a45-9388-34554bc0238b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b8455ae-8aff-41b2-931c-8b8828b8e79c"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LEC ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="505" y="40" width="55" height="20" uuid="56966fca-e0d0-43eb-b685-194133352643">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83f21ab1-7c61-44ba-866a-d1f002f8960a"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSUMO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="60" height="20" uuid="d5ac3beb-2e15-4b16-89b0-5024aa457223">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f90b1f8d-df4d-444d-860d-d8af2e784b05"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="0" width="100" height="20" uuid="64b56e1e-2f1c-4a42-bb8b-cd43f247a17d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5a265c43-4b70-44fe-b464-27b19bf7b317"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="65" y="0" width="100" height="20" uuid="9cb8ddc2-b1c9-4758-98b1-a36915e70349">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e70e6ebe-2794-454f-b206-111c1cbafa14"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="84" height="20" uuid="1758b600-c493-4ff1-8cf8-ae6c9e4aed52">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55530c13-1782-43be-9b5c-dfa0d191e2bc"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="362" y="0" width="68" height="20" uuid="1f85bf76-51b0-4c13-a2ec-5cce275b2f71">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1dc0ebd9-0c2c-49eb-94e8-cffb87651429"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lectura_anterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="0" width="64" height="20" uuid="70ab57b1-996d-4b56-a921-b9423f3187fa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7b8455ae-8aff-41b2-931c-8b8828b8e79c"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lectura_actual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="505" y="0" width="55" height="20" uuid="c157b93c-8ab3-4086-ad3d-6fe69d297723">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83f21ab1-7c61-44ba-866a-d1f002f8960a"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{consumo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

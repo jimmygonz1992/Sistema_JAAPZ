@@ -7,6 +7,7 @@ import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -168,6 +169,7 @@ public class ClientesListaClientesJuntaC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 	@FXML
 	void eliminarCliente(ActionEvent event) {
 		try {
@@ -194,7 +196,9 @@ public class ClientesListaClientesJuntaC {
 	@FXML
 	void imprimirListado(ActionEvent event) {
 		try {
-
+			PrintReport reporte = new PrintReport();
+			reporte.crearReporte("/recursos/informes/lista_cliente.jasper", cuentaDAO, null);
+			reporte.showReport("Listado de clientes");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

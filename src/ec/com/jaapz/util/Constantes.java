@@ -20,6 +20,7 @@ public abstract class Constantes {
 	public static String ESTADO_ACTIVO = "A";
 	public static String ESTADO_INACTIVO = "I";
 	
+	
 	public static String EST_FAC_CANCELADO = "CANCELADO";
 	public static String EST_FAC_PENDIENTE = "PENDIENTE";
 	

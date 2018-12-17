@@ -40,6 +40,16 @@ public class Context {
 	private List<SolInspeccionIn> listaInspecciones;
 	private List<Barrio> listaBarrios;
 	
+	private Integer idApertura;
+	
+	public Integer getIdApertura() {
+		return idApertura;
+	}
+
+	public void setIdApertura(Integer idApertura) {
+		this.idApertura = idApertura;
+	}
+
 	private AperturaLectura apertura;
 	private SolInspeccionIn inspeccion;
 	

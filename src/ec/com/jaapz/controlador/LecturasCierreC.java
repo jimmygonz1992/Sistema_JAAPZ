@@ -204,6 +204,7 @@ public class LecturasCierreC {
 					numLetras = "(" + helper.cantidadConLetra(String.valueOf(iPart)).toUpperCase() + " DÓLARES " + (long) (fPart * 100) + "/100)"; 
 					System.out.println(numLetras);
 					aperturaActual.getPlanillas().get(i).setTotalLetras(numLetras);
+					
 					aperturaActual.getPlanillas().get(i).setCancelado(Constantes.EST_FAC_PENDIENTE);
 				}
 
@@ -240,6 +241,7 @@ public class LecturasCierreC {
 	}
 	public void visualizarResultados() {
 		try {
+			Context.getInstance().setIdApertura(aperturaActual.getIdApertura());
 			helper.abrirPantallaModal("/lecturas/LecturasResultados.fxml","Resultados de la Apertura", Context.getInstance().getStage());
 
 		}catch(Exception ex) {

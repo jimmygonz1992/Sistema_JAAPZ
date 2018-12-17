@@ -196,14 +196,21 @@ public class LecturasIngresoC {
 	    			Double categoriaPrecio = det.getPlanilla().getCuentaCliente().getCategoria().getValorM3();
 	    			Integer lecturaActual = det.getPlanilla().getLecturaActual();
 	    			Integer lecturaAnterior = det.getPlanilla().getLecturaAnterior();
-	    			Integer consumo = lecturaActual - lecturaAnterior;
 	    			
+	    			System.out.println("Lectura anterior: " + lecturaAnterior);
+	    			System.out.println("Lectura actual: " + lecturaActual);
+	    			
+	    			Integer consumo = lecturaActual - lecturaAnterior;
+	    			System.out.println("Consumo: " + consumo);
+	    			
+	    			System.out.println("Id Detalle: " + det.getPlanilla().getIdPlanilla());
 	    			det.setCantidad(consumo);
 	    			det.getPlanilla().setConsumo(consumo);
 	    			det.setUsuarioCrea(Context.getInstance().getIdUsuario());
 	    			det.getPlanilla().setConsumoMinimo(0);
 	    			det.setSubtotal(consumo * categoriaPrecio);
 	    			det.setEstado(Constantes.ESTADO_ACTIVO);
+	    			
 	    			aperturaDAO.getEntityManager().merge(det);
 	    		}
 	    		aperturaDAO.getEntityManager().getTransaction().commit();
