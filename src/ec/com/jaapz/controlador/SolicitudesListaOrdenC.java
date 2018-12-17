@@ -18,7 +18,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class ClientesListaOrdenC {
+public class SolicitudesListaOrdenC {
 	@FXML TextField txtBuscar;
 	@FXML TableView<SolInspeccionIn> tvDatos;
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
@@ -65,12 +65,26 @@ public class ClientesListaOrdenC {
 			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("Código");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(50);
-			idColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("idInspeccion"));
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					String dato = "";
+					dato = String.valueOf(param.getValue().getIdSolInspeccion());
+					return new SimpleObjectProperty<String>(dato);
+				}
+			});
 
 			TableColumn<SolInspeccionIn, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
 			fechaColum.setPrefWidth(150);
-			fechaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("fecha"));
+			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					String dato = "";
+					dato = String.valueOf(param.getValue().getFechaIngreso());
+					return new SimpleObjectProperty<String>(dato);
+				}
+			});
 
 			TableColumn<SolInspeccionIn, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);

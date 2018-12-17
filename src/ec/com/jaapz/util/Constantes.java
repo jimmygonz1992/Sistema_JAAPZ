@@ -2,8 +2,8 @@ package ec.com.jaapz.util;
 
 public abstract class Constantes {
 	public static int ID_USU_ADMINISTRADOR = 1;
-	public static int ID_USU_INSPECCION = 2;
-	public static int ID_USU_LECTURA = 3;
+	public static int ID_USU_INSPECCION = 3;
+	public static int ID_USU_LECTURA = 2;
 	
 	public static String EST_INSPECCION_REALIZADO = "REALIZADO";
 	public static String EST_INSPECCION_PENDIENTE = "PENDIENTE";

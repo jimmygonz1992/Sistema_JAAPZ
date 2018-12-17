@@ -49,7 +49,7 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	private Time hora;
 
 	@Column(name="ident_instalacion")
-	private Boolean identInstalacion;
+	private String identInstalacion;
 
 	private String latitud;
 
@@ -163,11 +163,11 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 		this.hora = hora;
 	}
 
-	public Boolean getIdentInstalacion() {
+	public String getIdentInstalacion() {
 		return this.identInstalacion;
 	}
 
-	public void setIdentInstalacion(Boolean identInstalacion) {
+	public void setIdentInstalacion(String identInstalacion) {
 		this.identInstalacion = identInstalacion;
 	}
 

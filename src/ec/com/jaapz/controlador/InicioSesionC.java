@@ -75,6 +75,7 @@ public class InicioSesionC {
 			System.exit(0);
 	}
 	public void initialize(){
+		
 		toolTip = new Tooltip("Ingrese Nombre de usuario");
 		txtUsuario.setTooltip(toolTip);
 		toolTip = new Tooltip("Ingrese Clave del usuario");

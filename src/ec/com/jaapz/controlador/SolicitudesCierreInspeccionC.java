@@ -16,6 +16,9 @@ import ec.com.jaapz.modelo.SolInspeccionInDAO;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Medidor;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDetalle;
 import ec.com.jaapz.modelo.PrecioUnitario;
 import ec.com.jaapz.modelo.PrecioUnitarioDAO;
 import ec.com.jaapz.modelo.Rubro;
@@ -39,32 +42,38 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class ClientesCierreInspeccionC {
-	@FXML TextField txtCodigo;
-	@FXML TextField txtFecha;
-	@FXML TextField txtReferencia;
-	@FXML TextField txtHabitar;
-	@FXML TextField txtCédula;
-	@FXML TextField txtNombres;
-	@FXML TextField txtTelefono;
-	@FXML TextField txtGenero;
-	@FXML TextField txtLatitud;
-	@FXML TextField txtLongitud;
-	@FXML TextArea txtObservacion;
-	@FXML ComboBox<Factible> cboFactible;
-	@FXML Button btnBuscar;
-	@FXML Button btnGrabar;
-	@FXML Button btnEliminar;
-	@FXML Button btnAgregar;
-	@FXML Button btnQuitar;
-	@FXML Button btnBuscarRubro;
-	@FXML TextField txtTipoRubro;
-	@FXML TextField txtDescripcion;
-	@FXML TextField txtStock;
-	@FXML TextField txtCantidad;
-	@FXML TextField txtPrecio;
-	@FXML TextField txtEstado;
-
+public class SolicitudesCierreInspeccionC {
+	@FXML private TextField txtCodigo;
+	@FXML private TextField txtDireccion;
+	@FXML private TextField txtFecha;
+	@FXML private TextField txtReferencia;
+	@FXML private TextField txtHabitar;
+	@FXML private TextField txtCedula;
+	@FXML private TextField txtNombres;
+	@FXML private TextField txtTelefono;
+	@FXML private TextField txtGenero;
+	@FXML private TextField txtLatitud;
+	@FXML private TextField txtLongitud;
+	@FXML private TextArea txtObservacion;
+	@FXML private ComboBox<Factible> cboFactible;
+	@FXML private Button btnBuscar;
+	@FXML private Button btnGrabar;
+	@FXML private Button btnEliminar;
+	@FXML private Button btnAgregar;
+	@FXML private Button btnQuitar;
+	@FXML private Button btnBuscarRubro;
+	@FXML private TextField txtTipoRubro;
+	@FXML private TextField txtDescripcion;
+	@FXML private TextField txtStock;
+	@FXML private TextField txtCantidad;
+	@FXML private TextField txtPrecio;
+	
+	//nuevos componentes
+	@FXML private TextField txtModelo;
+	@FXML private TextField txtMarca;
+	@FXML private TextField txtCodigoMedidor;
+	@FXML private Button btnBuscarMedidor;
+	
 	@FXML TableView<LiquidacionDetalle> tvDatosOrdenPrevia;
 
 
@@ -83,8 +92,6 @@ public class ClientesCierreInspeccionC {
 		limpiarOrden();
 		llenarCombo();	
 		bloquearResultados();
-		txtEstado.setText(Constantes.EST_INSPECCION_REALIZADO);
-		txtEstado.setEditable(false);
 		cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
 		cboFactible.setDisable(true);
 	}
@@ -98,7 +105,9 @@ public class ClientesCierreInspeccionC {
 				cboFactible.setDisable(true);
 			}else
 				cboFactible.setDisable(false);
-			txtCédula.setText(inspeccion.getCliente().getCedula());
+			
+			txtCedula.setText(inspeccion.getCliente().getCedula());
+			txtDireccion.setText(inspeccion.getCliente().getDireccion());
 			txtNombres.setText(inspeccion.getCliente().getNombre() + " " + inspeccion.getCliente().getApellido());
 			txtTelefono.setText(inspeccion.getCliente().getTelefono());
 			txtGenero.setText(inspeccion.getCliente().getGenero());
@@ -106,7 +115,6 @@ public class ClientesCierreInspeccionC {
 			txtFecha.setText(String.valueOf(inspeccion.getFechaIngreso()));
 			txtReferencia.setText(inspeccion.getReferencia());
 			txtHabitar.setText(inspeccion.getUsoMedidor());
-			txtEstado.setText(inspeccion.getEstadoInspeccion());
 
 			//recupera detalle si esta realizado
 			if(inspeccion.getEstadoInspeccion().equals(Constantes.EST_INSPECCION_REALIZADO)) {
@@ -168,19 +176,15 @@ public class ClientesCierreInspeccionC {
 
 	void llenarCombo() {
 		try{
-			//arreglar
-			
-			/*
-			
 			ObservableList<Factible> listaFactibilidad = FXCollections.observableArrayList(Factible.values());
 			cboFactible.setItems(listaFactibilidad);
-			*/
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}
 	}
 	void bloquear() {
-		txtCédula.setEditable(false);
+		txtCedula.setEditable(false);
+		txtDireccion.setEditable(false);
 		txtNombres.setEditable(false);
 		txtTelefono.setEditable(false);
 		txtGenero.setEditable(false);
@@ -195,7 +199,7 @@ public class ClientesCierreInspeccionC {
 	}
 	public void buscarOrden() {
 		try{
-			helper.abrirPantallaModal("/clientes/ClientesListaOrdenes.fxml","Listado de Órdenes", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/solicitudes/SolicitudesListaOrdenes.fxml","Listado de Órdenes", Context.getInstance().getStage());
 			if (Context.getInstance().getInspeccion() != null) {
 				recuperarDatos(Context.getInstance().getInspeccion());
 				inspeccionSeleccionado = Context.getInstance().getInspeccion();
@@ -210,6 +214,10 @@ public class ClientesCierreInspeccionC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if(cboFactible.getSelectionModel().getSelectedItem().equals(Factible.FACTIBLE)) {//es factible la instalacion del medidor en la vivienda
+					if(medidorSeleccionado == null) {
+						helper.mostrarAlertaAdvertencia("Debe seleccionar un medidor!!!", Context.getInstance().getStage());
+						return;
+					}
 					double valorTotal = 0.0;
 					//declaro los objetos a grabar
 					LiquidacionOrden ordenLiquidacion = new LiquidacionOrden();
@@ -217,16 +225,25 @@ public class ClientesCierreInspeccionC {
 					Categoria categoria = new Categoria();
 					List<LiquidacionDetalle> detalle = new ArrayList<LiquidacionDetalle>();
 					
+					//para obtener la hora
+					java.util.Date utilDate = new java.util.Date(); 
+					long lnMilisegundos = utilDate.getTime();
+					java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+					
+					
 					//lleno los datos de la orden de despacho
 					ordenLiquidacion.setIdLiquidacion(null);
+					ordenLiquidacion.setMedidor(medidorSeleccionado);
 					ordenLiquidacion.setEstadoOrden("PENDIENTE");
 					ordenLiquidacion.setEstado("A");
+					ordenLiquidacion.setHora(sqlTime);
+					
 					ordenLiquidacion.setUsuarioCrea(Context.getInstance().getIdUsuario());
 
 					Date date = new Date();
 					Timestamp fecha = new Timestamp(date.getTime());
 					ordenLiquidacion.setFecha(fecha);
-					inspeccionSeleccionado.setEstadoInspeccion(txtEstado.getText());
+					inspeccionSeleccionado.setEstadoInspeccion("REALIZADO");
 					//lista de detalle de la orden previa de inspeccion a insertar
 					
 					for(LiquidacionDetalle det : tvDatosOrdenPrevia.getItems()) {
@@ -255,6 +272,46 @@ public class ClientesCierreInspeccionC {
 					cuentaCliente.setFechaIngreso(fecha);
 					cuentaCliente.setEstado("A");
 					
+					//aqui para agregar la factura del 60% del costo de instalacion
+					List<Planilla> listaAdd = new ArrayList<Planilla>();
+					Planilla planilla = new Planilla(); // planilla nueva para el cliente
+					planilla.setIdPlanilla(null);
+					
+					planilla.setHora(sqlTime);
+					planilla.setFecha(fecha);
+					planilla.setConvenio(Constantes.CONVENIO_NO);
+					//obtener el consumo del mes anterior
+					planilla.setConsumo(0);
+					planilla.setConsumoMinimo(0);
+					
+					planilla.setIdentInstalacion("INS"); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
+					planilla.setLecturaAnterior(0);//son cero en primera instancia
+					planilla.setLecturaActual(0);
+
+					planilla.setTotalPagar(valorTotal);
+					planilla.setTotalLetras(helper.cantidadConLetra(String.valueOf(valorTotal)));
+					planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					planilla.setCancelado(Constantes.EST_FAC_PENDIENTE);
+					planilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
+					listaAdd.add(planilla);
+					//enlace entre cliente y planilla
+					planilla.setCuentaCliente(cuentaCliente);
+					cuentaCliente.setPlanillas(listaAdd);
+
+					//enlace entre detalle de planilla y planilla
+					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
+					detallePlanilla.setIdPlanillaDet(null);
+					detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
+					detallePlanilla.setSubtotal(valorTotal);
+					detallePlanilla.setDescripcion("Por instalación de nuevo medidor");
+					detallePlanilla.setEstado("A");
+					detallePlanilla.setCantidad(0);
+					detallePlanilla.setPlanilla(planilla);
+					List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
+					det.add(detallePlanilla);
+					planilla.setPlanillaDetalles(det);
+					
+					
 					//enlace entre cuenta cliente y categoria
 					cuentaCliente.setCategoria(categoria);
 					List<CuentaCliente> listaCuenta = new ArrayList<CuentaCliente>();
@@ -269,24 +326,49 @@ public class ClientesCierreInspeccionC {
 					ordenLiquidacion.setSolInspeccionIn(inspeccionSeleccionado);
 					inspeccionSeleccionado.getLiquidacionOrdens().add(ordenLiquidacion);
 
-					//se procede a grabar los daotos
+					
+					//se procede a grabar los datos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
 					inspeccionDAO.getEntityManager().merge(inspeccionSeleccionado);
+					
+					//Tambien se hace una factura con el 60% del costo de instalacion
+					
 					inspeccionDAO.getEntityManager().getTransaction().commit();
-
+					
 					helper.mostrarAlertaInformacion("Datos Grabados", Context.getInstance().getStage());
 					limpiarCliente();
 					limpiarOrden();
 					limpiarObservaciones();
 					tvDatosOrdenPrevia.getColumns().clear();
 					tvDatosOrdenPrevia.getItems().clear();
+					tvDatosOrdenPrevia.getColumns().clear();
+					tvDatosOrdenPrevia.getItems().clear();
+					
+					txtCodigoMedidor.setText("");
+					txtModelo.setText("");
+					txtMarca.setText("");
+					medidorSeleccionado = null;
 				}else {
-					inspeccionSeleccionado.setEstadoInspeccion(txtEstado.getText());
+					inspeccionSeleccionado.setEstadoInspeccion("REALIZADO");
 					inspeccionSeleccionado.setFactibilidad(cboFactible.getSelectionModel().getSelectedItem().toString());
 					//se procede a grabar los daotos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
 					inspeccionDAO.getEntityManager().merge(inspeccionSeleccionado);
 					inspeccionDAO.getEntityManager().getTransaction().commit();
+					
+					helper.mostrarAlertaInformacion("Datos Grabados", Context.getInstance().getStage());
+					limpiarCliente();
+					limpiarOrden();
+					limpiarObservaciones();
+					tvDatosOrdenPrevia.getColumns().clear();
+					tvDatosOrdenPrevia.getItems().clear();
+					tvDatosOrdenPrevia.getColumns().clear();
+					tvDatosOrdenPrevia.getItems().clear();
+					
+					txtCodigoMedidor.setText("");
+					txtModelo.setText("");
+					txtMarca.setText("");
+					medidorSeleccionado = null;
 				}
 				
 			}
@@ -316,6 +398,12 @@ public class ClientesCierreInspeccionC {
 				bloquearResultados();
 				tvDatosOrdenPrevia.getColumns().clear();
 				tvDatosOrdenPrevia.getItems().clear();
+				
+				txtCodigoMedidor.setText("");
+				txtModelo.setText("");
+				txtMarca.setText("");
+				medidorSeleccionado = null;
+				
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -481,7 +569,8 @@ public class ClientesCierreInspeccionC {
 		}
 	}
 	private void limpiarCliente() {
-		txtCédula.setText("");
+		txtCedula.setText("");
+		txtDireccion.setText("");
 		txtNombres.setText("");
 		txtTelefono.setText("");
 		txtGenero.setText("");
@@ -507,6 +596,10 @@ public class ClientesCierreInspeccionC {
 	void bloquearResultados() {
 		tvDatosOrdenPrevia.setDisable(true);
 		btnAgregar.setDisable(true);
+		txtCodigoMedidor.setEditable(true);
+		btnBuscarMedidor.setDisable(true);
+		txtMarca.setEditable(true);
+		txtModelo.setEditable(true);
 		btnQuitar.setDisable(true);
 		txtTipoRubro.setDisable(true);
 		txtDescripcion.setDisable(true);
@@ -518,6 +611,10 @@ public class ClientesCierreInspeccionC {
 	void desbloquearResultados() {
 		tvDatosOrdenPrevia.setDisable(false);
 		btnAgregar.setDisable(false);
+		btnBuscarMedidor.setDisable(false);
+		txtCodigoMedidor.setEditable(false);
+		txtMarca.setEditable(false);
+		txtModelo.setEditable(false);
 		btnQuitar.setDisable(false);
 		txtTipoRubro.setDisable(false);
 		txtDescripcion.setDisable(false);
@@ -525,5 +622,25 @@ public class ClientesCierreInspeccionC {
 		txtCantidad.setDisable(false);
 		txtPrecio.setDisable(false);
 		btnBuscarRubro.setDisable(false);
+	}
+	
+	Medidor medidorSeleccionado;
+	public void buscarMedidor() {
+		try{
+			helper.abrirPantallaModal("/solicitudes/SolicitudesListaMedidor.fxml","Listado Medidores", Context.getInstance().getStage());
+			if (Context.getInstance().getMedidor() != null) {
+				medidorSeleccionado = Context.getInstance().getMedidor();
+				txtCodigoMedidor.setText(medidorSeleccionado.getCodigo());
+				txtModelo.setText(medidorSeleccionado.getModelo());
+				txtMarca.setText(medidorSeleccionado.getMarca());
+			}else {
+				txtCodigoMedidor.setText("");
+				txtModelo.setText("");
+				txtMarca.setText("");
+				medidorSeleccionado = null;
+			}
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
 	}
 }

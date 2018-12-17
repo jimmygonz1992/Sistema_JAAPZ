@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Medidor.findAll", query="SELECT m FROM Medidor m")
+@NamedQuery(name="Medidor.medidoresDisponibles", query="SELECT m FROM Medidor m where m.estado = 'A'")
 public class Medidor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
