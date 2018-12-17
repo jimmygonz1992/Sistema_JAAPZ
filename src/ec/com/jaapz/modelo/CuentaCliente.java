@@ -20,7 +20,9 @@ import java.util.List;
 	@NamedQuery(name="CuentaCliente.buscarCuentaClientePerfil", query="SELECT c FROM CuentaCliente c "
 			+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
 			+ "or lower(c.cliente.cedula) like :patron)"
-			+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc")
+			+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
+	@NamedQuery(name="CuentaCliente.existeCuenta", query="SELECT c FROM CuentaCliente c where (c.idCuenta = (:cuenta) and c.estado = 'A')"),
+	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')")
 })
 public class CuentaCliente implements Serializable {
 	private static final long serialVersionUID = 1L;

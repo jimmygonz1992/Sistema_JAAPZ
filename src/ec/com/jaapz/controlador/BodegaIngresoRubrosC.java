@@ -11,7 +11,6 @@ import java.util.Optional;
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
-import ec.com.jaapz.modelo.Kardex;
 import ec.com.jaapz.modelo.Proveedor;
 import ec.com.jaapz.modelo.ProveedorDAO;
 import ec.com.jaapz.modelo.Rubro;
@@ -62,6 +61,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtStockMat;
 
 	@FXML private TextField txtProveedor;
+	@FXML private TextField txtCodigoProv;
 	@FXML private TextField txtRuc;
 	@FXML private TextField txtNombresPro;
 	@FXML private TextField txtApellidosPro;
@@ -77,11 +77,23 @@ public class BodegaIngresoRubrosC {
 	IngresoDAO ingresoDao = new IngresoDAO();
 	RubroDAO rubroDAO = new RubroDAO();
 	ProveedorDAO proveedorDAO = new ProveedorDAO();
+<<<<<<< HEAD
+	int idfactura;
+	int solorecupera = 0;
+	int accion;
+	int int_bandera;
+	
+	public void initialize(){
+		try {
+			txtCodigoProv.setText("0");
+			txtCodigo.setText("0");
+=======
 	Ingreso ingreso;
 	public void initialize(){
 		try {
 			int maxLength = 10;
 			limpiarIngreso();
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 			Encriptado encriptado = new Encriptado();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
@@ -195,8 +207,12 @@ public class BodegaIngresoRubrosC {
 					}				
 				}
 			});
+<<<<<<< HEAD
+			//para anadir a la grilla con enter
+=======
 
 			//para añadir a la grilla con enter
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 			txtCantidadMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){
@@ -206,7 +222,11 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
+<<<<<<< HEAD
+			
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 			//recuperar Proveedor
 			txtRuc.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -228,21 +248,85 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
+<<<<<<< HEAD
+			
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 			//recuperar factura
 			txtNumero.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){
 					if (ke.getCode().equals(KeyCode.ENTER)){
+<<<<<<< HEAD
+						if (recuperarIngreso(txtNumero.getText()) == false) {
+							txtRuc.setText("");
+							txtProveedor.setText("");
+							txtNombresPro.setText("");
+							txtApellidosPro.setText("");
+							txtDireccionPro.setText("");
+							txtTelefonoPro.setText("");
+							tvDatos.getItems().clear();
+							tvDatos.getColumns().clear();
+							dtpFecha.setValue(null);
+							txtUsuario.setText("");
+							txtSubtotal.setText("");
+							txtDescuento.setText("");
+							txtTotal.setText("");
+							txtObservaciones.setText("");
+							//bandera
+							idfactura = 0;
+=======
 						if (validarIngresoExiste() == true) {
 							recuperarIngreso(txtNumero.getText());
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 						}
 					}
 				}
 			});
-
+<<<<<<< HEAD
+			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	boolean recuperarIngreso(String numIngreso) {
+		try {
+			int lng_idfac;
+			List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
+			listaIngreso = ingresoDao.getRecuperaIngreso(numIngreso);
+			for(int i=0; i<listaIngreso.size(); i++) {
+				lng_idfac = listaIngreso.get(i).getIdIngreso();
+				solorecupera = 1;
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				String fechaComoCadena = sdf.format(listaIngreso.get(i).getFecha());
+				txtCodigoProv.setText(Integer.toString(listaIngreso.get(i).getProveedor().getIdProveedor()));
+				txtRuc.setText(listaIngreso.get(i).getProveedor().getRuc());
+				txtProveedor.setText(listaIngreso.get(i).getProveedor().getNombreComercial());
+				txtNombresPro.setText(listaIngreso.get(i).getProveedor().getNombres());
+				txtApellidosPro.setText(listaIngreso.get(i).getProveedor().getApellidos());
+				txtDireccionPro.setText(listaIngreso.get(i).getProveedor().getDireccion());
+				txtTelefonoPro.setText(listaIngreso.get(i).getProveedor().getTelefono());
+				
+				txtCodigo.setText(Integer.toString(listaIngreso.get(i).getIdIngreso()));
+				txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
+				dtpFecha.setPromptText(fechaComoCadena);
+				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
+				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));
+				idfactura = lng_idfac;
+				recuperarDetalleIngreso(listaIngreso.get(i));
+				return true;
+			}
+			solorecupera = 0;
+			return true;
+=======
+
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 
@@ -308,6 +392,20 @@ public class BodegaIngresoRubrosC {
 		}
 		System.out.println(lista.size() + " Eliminar");
 	
+<<<<<<< HEAD
+	@SuppressWarnings("unchecked")
+	private void recuperarDetalleIngreso(Ingreso ing) {
+		ObservableList<IngresoDetalle> datos = FXCollections.observableArrayList();
+		tvDatos.getColumns().clear();
+		tvDatos.getItems().clear();
+		for (int i=0; i<ing.getIngresoDetalles().size(); i++) {
+			if (ing.getIngresoDetalles().get(i).getEstado().equals("I")){
+				ing.getIngresoDetalles().remove(i);
+			}
+		}
+		
+		datos.setAll(ing.getIngresoDetalles());
+=======
 
 		for(IngresoDetalle dd : lista) {
 			for(int i = 0 ; i < ingreso.getIngresoDetalles().size() ; i ++) {
@@ -320,6 +418,7 @@ public class BodegaIngresoRubrosC {
 		datos.setAll(ingreso.getIngresoDetalles());
 
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 		TableColumn<IngresoDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 		descripcionColum.setMinWidth(10);
 		descripcionColum.setPrefWidth(200);
@@ -329,7 +428,11 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getRubro().getDescripcion()));
 			}
 		});
+<<<<<<< HEAD
+		
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 		TableColumn<IngresoDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 		cantidadColum.setMinWidth(10);
 		cantidadColum.setPrefWidth(90);
@@ -339,7 +442,11 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()));
 			}
 		});
+<<<<<<< HEAD
+		
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 		TableColumn<IngresoDetalle, String> precioColum = new TableColumn<>("Precio");
 		precioColum.setMinWidth(10);
 		precioColum.setPrefWidth(90);
@@ -349,7 +456,11 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPrecio()));
 			}
 		});
+<<<<<<< HEAD
+		
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 		TableColumn<IngresoDetalle, String> totalColum = new TableColumn<>("Total");
 		totalColum.setMinWidth(10);
 		totalColum.setPrefWidth(90);
@@ -360,12 +471,20 @@ public class BodegaIngresoRubrosC {
 			}
 		});
 
+<<<<<<< HEAD
+		accion = 2;
+		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
+		tvDatos.setItems(datos);
+	}
+	
+=======
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
 
 		sumarDatos();
 	}
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 	boolean validarProveedorExiste() {
 		try {
 			List<Proveedor> listaProveedores;
@@ -379,7 +498,12 @@ public class BodegaIngresoRubrosC {
 			return false;
 		}
 	}
+<<<<<<< HEAD
+	
+	//recupera datos del proveedor
+=======
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 	public void recuperarDatos(String ruc){
 		try{
 			List<Proveedor> listaProveedor = new ArrayList<Proveedor>();
@@ -413,6 +537,7 @@ public class BodegaIngresoRubrosC {
 			datoAnadir.setRubro(rubroSeleccionado);
 			datoAnadir.setCantidad(Integer.parseInt(txtCantidadMat.getText()));
 			datoAnadir.setPrecio(Double.parseDouble(txtPrecioMat.getText()));
+			datoAnadir.setTotal((Integer.parseInt(txtCantidadMat.getText()) * Double.parseDouble(txtPrecioMat.getText())));
 			datos.add(datoAnadir);
 
 			//llenar los datos en la tabla			
@@ -441,6 +566,8 @@ public class BodegaIngresoRubrosC {
 				}
 			});
 
+			accion = 1;
+			int_bandera = 0;
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
 
@@ -504,7 +631,7 @@ public class BodegaIngresoRubrosC {
 	}
 	//aqui voy a intentar modificar el grabar
 	public void grabar() {
-		try {
+	try {
 			if(validarDatos() == false)
 				return;
 			String estado = "A";
@@ -709,6 +836,76 @@ public class BodegaIngresoRubrosC {
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+<<<<<<< HEAD
+				if (idfactura == 0) {
+					if(buscaFactura() == true) {
+						helper.mostrarAlertaAdvertencia("Número de factura ya existe", Context.getInstance().getStage());
+						return;
+					}
+				}			
+				//funcion grabar informacion
+				if (grabarFacIngreso() == false) {
+					helper.mostrarAlertaError("Error al guardar datos", Context.getInstance().getStage());
+				}else {
+					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				}
+			}
+			
+		}catch(Exception ex) {
+			//ingresoDao.getEntityManager().getTransaction().rollback();
+			//helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	boolean grabarFacIngreso() {
+		try {
+			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			Timestamp fecha = new Timestamp(date.getTime());
+			String estado = "A";
+			Ingreso ingreso = new Ingreso();
+			Proveedor proveedor = new Proveedor();
+			//inicia transaccion
+					
+			proveedor.setNombreComercial(txtProveedor.getText());
+			proveedor.setNombres(txtNombresPro.getText());
+			proveedor.setApellidos(txtApellidosPro.getText());
+			proveedor.setDireccion(txtDireccionPro.getText());
+			proveedor.setRuc(txtRuc.getText());
+			proveedor.setTelefono(txtTelefonoPro.getText());
+			proveedor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+			proveedor.setFechaCrea(fecha);
+			proveedor.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+			proveedor.setFechaModificacion(fecha);
+			proveedor.setEstado("A");
+			
+			//proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
+			ingreso.setProveedor(proveedor);
+			ingreso.setNumeroIngreso(txtNumero.getText());
+			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+			ingreso.setFecha(fecha);
+			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
+			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
+			ingreso.setEstado(estado);
+			
+			List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
+			for(IngresoDetalle det : tvDatos.getItems()) {
+				det.setIdIngresoDet(null);
+				det.setEstado("A");
+				det.setIngreso(ingreso);
+				listaAgregadaRubros.add(det);
+			}
+			
+			ingreso.setIngresoDetalles(listaAgregadaRubros);
+			ingresoDao.getEntityManager().getTransaction().begin();
+			
+			if(txtCodigoProv.getText().equals("0")) {//inserta
+				proveedor.setIdProveedor(null);
+				ingresoDao.getEntityManager().persist(proveedor);
+			}else {//modifica
+				proveedor.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
+				ingresoDao.getEntityManager().merge(proveedor);
+=======
 				Ingreso ingreso = new Ingreso();
 				List<Kardex> listaProductos = new ArrayList<Kardex>();
 
@@ -792,11 +989,38 @@ public class BodegaIngresoRubrosC {
 				txtNumero.setText("");
 				tvDatos.getColumns().clear();
 				tvDatos.getItems().clear();
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 			}
+			
+			if(txtCodigo.getText().equals("0")) {//inserta
+				ingreso.setIdIngreso(null);
+				ingresoDao.getEntityManager().persist(ingreso);
+			}else {//modifica
+				ingreso.setIdIngreso(Integer.parseInt(txtCodigo.getText()));
+				ingresoDao.getEntityManager().merge(ingreso);
+			}
+			ingresoDao.getEntityManager().getTransaction().commit();
+			helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+			return true;		
 		}catch(Exception ex) {
-			ingresoDao.getEntityManager().getTransaction().rollback();
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			ingresoDao.getEntityManager().getTransaction().rollback();
 			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	boolean buscaFactura() {
+		try {
+			List<Ingreso> listaIngresos;
+			listaIngresos = ingresoDao.getBuscaFactura(txtNumero.getText(), Integer.parseInt(txtCodigoProv.getText()));
+			if(listaIngresos.size() != 0)
+				return true;
+			else
+				return false;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}*/
 
@@ -884,8 +1108,19 @@ public class BodegaIngresoRubrosC {
 	public void nuevo() {
 		limpiar();
 		limpiarProveedor();
+<<<<<<< HEAD
+		txtCodigo.setText("0");
+		txtNumero.setText("");
+		txtSubtotal.setText("");
+		txtDescuento.setText("");
+		txtTotal.setText("");
+		tvDatos.getColumns().clear();
+		tvDatos.getItems().clear();
+	}
+=======
 		limpiarIngreso();
 	}	
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 
 	public void buscarRubro() {
 		try{
@@ -939,6 +1174,9 @@ public class BodegaIngresoRubrosC {
 		txtTelefonoPro.setText("");
 		//proveedorSeleccionado = null;
 	}
+<<<<<<< HEAD
+	
+=======
 
 	void limpiarIngreso() {
 		txtCodigoIng.setText("0");
@@ -952,6 +1190,7 @@ public class BodegaIngresoRubrosC {
 	}
 
 
+>>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 	public boolean validarRucPersonaNatural(String numero) {
 		try {
 			validarInicial(numero, 13);
